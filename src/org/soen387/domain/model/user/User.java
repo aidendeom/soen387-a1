@@ -7,12 +7,14 @@ import org.soen387.domain.user.tdg.UserTDG;
 public class User {
 	
 	private long id;
+	private int version;
 	private String username;
 	private String password;
 	
-	public User(long id, String username, String password) {
+	public User(long id, int version, String username, String password) {
 		super();
 		this.id = id;
+		this.version = version;
 		this.username = username;
 		this.password = password;
 	}
@@ -24,8 +26,18 @@ public class User {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	public int getVersion()
+    {
+        return version;
+    }
 
-	public String getUsername() {
+    public void setVersion(int version)
+    {
+        this.version = version;
+    }
+
+    public String getUsername() {
 		return username;
 	}
 
@@ -40,6 +52,4 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	
 }

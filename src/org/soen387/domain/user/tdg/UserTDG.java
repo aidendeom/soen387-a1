@@ -11,6 +11,7 @@ public class UserTDG
 {
 	public static final String FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?;";
 	public static final String GET_NEXT_ID = "SELECT max(id) AS id FROM users;";
+	public static final String INSERT = "INSERT INTO users(id, version, username, password) VALUES(?,?,?,?);";
 	
 	public static ResultSet findByUsername(String username) throws SQLException
 	{
@@ -27,7 +28,7 @@ public class UserTDG
 		if (nextID == -1L)
 		{
 			Connection con = DbRegistry.getDbConnection();
-			PreparedStatement ps = con.prepareStatement(FIND_BY_USERNAME);
+			PreparedStatement ps = con.prepareStatement(GET_NEXT_ID);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next())
 			{
@@ -37,4 +38,20 @@ public class UserTDG
 		
 		return ++nextID;
 	}
+
+    public static int insert(long id,
+                              int version,
+                              String username,
+                              String password) throws SQLException
+    {
+        Connection con = DbRegistry.getDbConnection();
+        PreparedStatement ps = con.prepareStatement(INSERT);
+        
+        ps.setLong(1, id);
+        ps.setInt(2, version);
+        ps.setString(3, username);
+        ps.setString(4, password);
+                
+        return ps.executeUpdate();
+    }
 }

@@ -17,11 +17,22 @@ public class UserMapper {
 		if (rs.next())
 		{
 			long id = rs.getLong("id");
+			int version = rs.getInt("version");
 			String usern = rs.getString("username");
 			String pass = rs.getString("password");
-			user = new User(id, usern, pass);
+			user = new User(id, version, usern, pass);
 		}
 		
 		return user;
 	}
+	
+	public static long getNextId() throws SQLException
+	{
+	    return UserTDG.getNextId();
+	}
+
+    public static int insert(User user) throws SQLException
+    {
+        return UserTDG.insert(user.getId(), user.getVersion(), user.getUsername(), user.getPassword());
+    }
 }

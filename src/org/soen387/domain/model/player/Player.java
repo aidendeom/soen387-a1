@@ -1,5 +1,7 @@
 package org.soen387.domain.model.player;
 
+import org.soen387.domain.model.user.User;
+
 /**
  * 
  *This is a complete stub. 
@@ -10,14 +12,16 @@ public class Player {
 	String firstName;
 	String lastName;
 	String email;
+	//User user;
 
-	public Player(long id, int version, String firstName, String lastName, String email) {
+	public Player(long id, int version, String firstName, String lastName, String email/*, User user*/) {
 		super();
 		this.id = id;
 		this.version = version;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		//this.user = user;
 	}
 	
 	
@@ -70,6 +74,15 @@ public class Player {
 		this.id = id;
 	}
 
-	
-	
+//
+//    public User getUser()
+//    {
+//        return user;
+//    }
+//
+//
+//    public void setUser(User user)
+//    {
+//        this.user = user;
+//    }	
 }
