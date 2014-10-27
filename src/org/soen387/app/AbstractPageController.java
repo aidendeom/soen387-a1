@@ -1,6 +1,5 @@
 package org.soen387.app;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;

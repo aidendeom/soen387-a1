@@ -6,6 +6,8 @@ package org.soen387.domain.model.player;
  */
 public class Player {
 	long id;
+	int version;
+	
 
 	public long getId() {
 		return id;
