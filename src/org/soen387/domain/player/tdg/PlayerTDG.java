@@ -4,15 +4,42 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.dsrg.soenea.service.threadLocal.DbRegistry;
 
 public class PlayerTDG {
+	public static final String TABLE_NAME = "players";
+	public static final String TRUNCATE_TABLE = "TRUNCATE TABLE  " + TABLE_NAME + ";";
+	public static final String DROP_TABLE = "DROP TABLE  " + TABLE_NAME + ";";
+	public static final String FIND_BY_ID = "SELECT * FROM "+ TABLE_NAME +"  WHERE id = ?;";
+	public static final String GET_NEXT_ID = "SELECT max(id) AS id FROM " + TABLE_NAME + ";";
+	public static final String INSERT = "INSERT INTO " + TABLE_NAME + " players(id, version, firstName, lastName, email) VALUES(?,?,?,?,?);";
+	public static final String FIND_ALL = "SELECT * FROM " + TABLE_NAME + ";";
+	public static final String CREATE_TABLE ="CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" 
+			+ "id BIGINT, "
+			+ "version int, "
+			+ "firstName VARCHAR(80), "
+			+ "lastName VARCHAR(80), "
+			+ "email VARCHAR(80)"
+			+ ");";
+	
+	private static long nextID = -1L;
 
-	public static final String FIND_BY_ID = "SELECT * FROM players WHERE id = ?;";
-	public static final String GET_NEXT_ID = "SELECT max(id) AS id FROM players;";
-	public static final String INSERT = "INSERT INTO players(id, version, firstName, lastName, email) VALUES(?,?,?,?,?);";
-	public static final String FIND_ALL = "SELECT * FROM players;";
+	
+	public static void createTable() throws SQLException {
+		Connection con = DbRegistry.getDbConnection();
+		Statement update = con.createStatement();
+		update.execute(CREATE_TABLE);
+	}
+	
+	public static void dropTable() throws SQLException {
+		Connection con = DbRegistry.getDbConnection();
+		Statement update = con.createStatement();
+		update.execute(TRUNCATE_TABLE);
+		update = con.createStatement();
+		update.execute(DROP_TABLE);
+	}
 	
 	public static ResultSet find(long id) throws SQLException
 	{
@@ -21,9 +48,7 @@ public class PlayerTDG {
 		ps.setLong(1, id);
 		return ps.executeQuery();
 	}
-	
-	private static long nextID = -1L;
-	
+
 	public static long getNextId() throws SQLException
 	{
 		if (nextID == -1L)
