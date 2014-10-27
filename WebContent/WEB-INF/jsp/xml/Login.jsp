@@ -5,5 +5,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkers>
 <status>success</status>
-<user username=${user.username} id=${user.id } />
+<user username="${user.username}" id="${user.id }" />
 </checkers>
