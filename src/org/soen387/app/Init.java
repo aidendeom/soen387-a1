@@ -14,11 +14,8 @@ import org.soen387.domain.user.tdg.UserTDG;
  *
  */
 public class Init {
-
-	public static void main(String[] args) {
-		
-		System.out.println("Connecting to MySQL");
-		//==========================================
+	
+	public static void prepareDbRegistry() {
 		MySQLConnectionFactory f = new MySQLConnectionFactory(null, null, null, null);
 		try {
 			f.defaultInitialization();
@@ -39,10 +36,9 @@ public class Init {
 			tablePrefix = "";
 		}
 		DbRegistry.setTablePrefix(tablePrefix);
-		//=======================================
-		
-		System.out.println("Creating all tables");
-		System.out.println("--------------------");
+	}
+	
+	public static void prepareTables(){
 		try {
 			UserTDG.dropTable();
 			UserTDG.createTable();
@@ -70,5 +66,19 @@ public class Init {
 			e.printStackTrace();
 			
 		}
+	}
+
+
+	public static void main(String[] args) {
+		
+		System.out.println("Connecting to MySQL");
+		prepareDbRegistry();
+		
+		System.out.println("Creating all tables");
+		System.out.println("--------------------");
+		prepareTables();
+		
+		System.out.println("Populate Data");
+		
 	}
 }

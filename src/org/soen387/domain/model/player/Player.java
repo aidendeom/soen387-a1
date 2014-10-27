@@ -24,7 +24,6 @@ public class Player {
 		this.user = user;
 	}
 	
-	
 	public long getId() {
 		return id;
 	}
