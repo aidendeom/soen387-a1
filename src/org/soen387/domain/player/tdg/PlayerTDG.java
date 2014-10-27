@@ -12,6 +12,7 @@ public class PlayerTDG {
 	public static final String FIND_BY_ID = "SELECT * FROM players WHERE id = ?;";
 	public static final String GET_NEXT_ID = "SELECT max(id) AS id FROM players;";
 	public static final String INSERT = "INSERT INTO players(id, version, firstName, lastName, email) VALUES(?,?,?,?,?);";
+	public static final String FIND_ALL = "SELECT * FROM players;";
 	
 	public static ResultSet find(long id) throws SQLException
 	{
@@ -56,5 +57,12 @@ public class PlayerTDG {
         
         return ps.executeUpdate();
     }
+
+	public static ResultSet findAll() throws SQLException
+	{
+		Connection con = DbRegistry.getDbConnection();
+        PreparedStatement ps = con.prepareStatement(FIND_ALL);
+        return ps.executeQuery();
+	}
 
 }
