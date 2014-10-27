@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.checkerboard.mapper.CheckerBoardDataMapper;
 import org.soen387.domain.model.checkerboard.CheckerBoard;
+import org.soen387.domain.model.player.Player;
 import org.soen387.domain.model.user.User;
+import org.soen387.domain.player.mapper.PlayerMapper;
 import org.soen387.domain.user.mapper.UserMapper;
 
 /**
@@ -48,8 +50,12 @@ public class Login extends AbstractPageController implements Servlet {
 			User user = UserMapper.findByUsername(username);
 			if (user != null && password.equals(user.getPassword()))
 			{
+				Player player = PlayerMapper.find(user.getId());
+				
 				request.setAttribute("user", user);
-				request.getRequestDispatcher("/WEB-INF/jsp/xml/login.jsp").forward(request, response);
+				request.setAttribute("player", player);
+				
+				request.getRequestDispatcher("/WEB-INF/jsp/xml/login.jsp").forward(request,  response);
 			}
 			else if (user == null)
 			{
