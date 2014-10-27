@@ -54,12 +54,12 @@ public class Login extends AbstractPageController implements Servlet {
 			else if (user == null)
 			{
 				request.setAttribute("reason", "username");
-				request.getRequestDispatcher("/WEB-INF/jsp/xml/login.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
 			}
 			else
 			{
 				request.setAttribute("reason", "password");
-				request.getRequestDispatcher("/WEB-INF/jsp/xml/login.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
 			}
 			
 		} catch (SQLException e) {
