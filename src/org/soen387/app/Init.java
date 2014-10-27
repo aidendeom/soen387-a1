@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.dsrg.soenea.service.MySQLConnectionFactory;
 import org.dsrg.soenea.service.registry.Registry;
 import org.dsrg.soenea.service.threadLocal.DbRegistry;
+import org.soen387.domain.challenge.tdg.ChallengeTDG;
 import org.soen387.domain.checkerboard.tdg.CheckerBoardTDG;
 import org.soen387.domain.player.tdg.PlayerTDG;
 import org.soen387.domain.user.tdg.UserTDG;
@@ -28,7 +29,6 @@ public class Init {
 		try {
 			tablePrefix = Registry.getProperty("mySqlTablePrefix");
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			tablePrefix = "";
 		}
@@ -66,6 +66,15 @@ public class Init {
 			e.printStackTrace();
 			
 		}
+		
+		try {
+			ChallengeTDG.dropTable();
+			ChallengeTDG.createTable();
+			System.out.println("Created CheckerBoard Table");
+		} catch (SQLException e) {
+			System.out.println("Error creating challenge Table");
+			e.printStackTrace();
+		}
 	}
 
 
@@ -77,8 +86,10 @@ public class Init {
 		System.out.println("Creating all tables");
 		System.out.println("--------------------");
 		prepareTables();
+		System.out.println("--------------------");
 		
 		System.out.println("Populate Data");
+		
 		
 	}
 }
