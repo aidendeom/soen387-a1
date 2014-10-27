@@ -6,16 +6,32 @@ import org.soen387.domain.model.player.Player;
 public class Challenge {
 	
 	long id;
-	long challengerId;
-	long challengeeId;
+	Player challenger;
+	Player challengee;
 	ChallengeStatus status;
 
-	public Challenge(long id, long challengerID, long challengeeID, ChallengeStatus status){
+	public Challenge(long id, Player challenger, Player challengee, ChallengeStatus status){
 		super();
 		this.id = id;
-		this.challengerId = challengerID;
-		this.challengeeId = challengeeID;
+		this.challenger = challenger;
+		this.challengee = challengee;
 		this.status = status;
+	}
+
+	public Player getChallenger() {
+		return challenger;
+	}
+
+	public void setChallenger(Player challenger) {
+		this.challenger = challenger;
+	}
+
+	public Player getChallengee() {
+		return challengee;
+	}
+
+	public void setChallengee(Player challengee) {
+		this.challengee = challengee;
 	}
 
 	public long getId() {
@@ -24,22 +40,6 @@ public class Challenge {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public long getChallengerId() {
-		return challengerId;
-	}
-
-	public void setChallengerId(long challengerId) {
-		this.challengerId = challengerId;
-	}
-
-	public long getChallengeeId() {
-		return challengeeId;
-	}
-
-	public void setChallengeeId(long challengeeId) {
-		this.challengeeId = challengeeId;
 	}
 
 	public ChallengeStatus getStatus() {
