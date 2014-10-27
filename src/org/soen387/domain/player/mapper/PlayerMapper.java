@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.soen387.domain.model.player.Player;
 import org.soen387.domain.model.user.User;
 import org.soen387.domain.player.tdg.PlayerTDG;
+import org.soen387.domain.user.mapper.UserMapper;
 
 public class PlayerMapper
 {
@@ -23,9 +24,13 @@ public class PlayerMapper
             String firstName = rs.getString("firstName");
             String lastName = rs.getString("lastName");
             String email = rs.getString("email");
-            player = new Player(idn, version, firstName, lastName, email);
+            User user = UserMapper.find(idn);
+            
+            player = new Player(idn, version, firstName, lastName, email, user);
         }
 
+        rs.close();
+        
         return player;
     }
 

@@ -49,7 +49,7 @@ public class Register extends AbstractPageController implements Servlet
             String lastName = request.getParameter("lastname");
             String email = request.getParameter("email");
             
-            Player player = new Player(id, 1, firstName, lastName, email);
+            Player player = new Player(id, 1, firstName, lastName, email, user);
             
             UserMapper.insert(user);
             PlayerMapper.insert(player);

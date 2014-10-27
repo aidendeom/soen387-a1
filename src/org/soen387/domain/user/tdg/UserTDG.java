@@ -9,9 +9,18 @@ import org.dsrg.soenea.service.threadLocal.DbRegistry;
 
 public class UserTDG
 {
+	public static final String FIND = "SELECT * FROM users WHERE id = ?;";
 	public static final String FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?;";
 	public static final String GET_NEXT_ID = "SELECT max(id) AS id FROM users;";
 	public static final String INSERT = "INSERT INTO users(id, version, username, password) VALUES(?,?,?,?);";
+	
+	public static ResultSet find(long id) throws SQLException
+	{
+		Connection con = DbRegistry.getDbConnection();
+		PreparedStatement ps = con.prepareStatement(FIND);
+		ps.setLong(1, id);
+		return ps.executeQuery();
+	}
 	
 	public static ResultSet findByUsername(String username) throws SQLException
 	{
