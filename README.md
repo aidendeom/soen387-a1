@@ -1,17 +1,17 @@
 soen387-a1
 ==========
-Assignment 1 for SOEN 387 at Concordia University: Creating a online checkers web application
-
-Should be able to:
--Login
--Logout
--Register
--List users
--Challenge users
--View my challenges
--Accept challenges
-
-Aiden Deom
-Abtin Farokhfal
-Amit Malhotra
+Assignment 1 for SOEN 387 at Concordia University: Creating a online checkers web application<br/>
+<br/>
+Should be able to: <br/>
+-Login <br/>
+-Logout <br/>
+-Register <br/>
+-List users <br/>
+-Challenge users <br/>
+-View my challenges <br/>
+-Accept challenges <br/>
+<br/>
+Aiden Deom <br/>
+Abtin Farokhfal <br/>
+Amit Malhotra <br/>
 Dmitri Novikov
