@@ -11,7 +11,7 @@ import org.dsrg.soenea.service.threadLocal.DbRegistry;
 public class PlayerTDG {
 	public static final String TABLE_NAME = "players";
 	public static final String TRUNCATE_TABLE = "TRUNCATE TABLE  " + TABLE_NAME + ";";
-	public static final String DROP_TABLE = "DROP TABLE  " + TABLE_NAME + ";";
+	public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 	public static final String FIND_BY_ID = "SELECT * FROM "+ TABLE_NAME +" WHERE id = ?;";
 	public static final String FIND_BY_USER_ID = "SELECT * FROM "+ TABLE_NAME +" WHERE userid = ?;";
 	public static final String GET_NEXT_ID = "SELECT max(id) AS id FROM " + TABLE_NAME + ";";
@@ -38,8 +38,9 @@ public class PlayerTDG {
 	public static void dropTable() throws SQLException {
 		Connection con = DbRegistry.getDbConnection();
 		Statement update = con.createStatement();
-		update.execute(TRUNCATE_TABLE);
-		update = con.createStatement();
+		//commented out the truncate table as it seems unnecessary
+		//update.execute(TRUNCATE_TABLE);
+		//update = con.createStatement();
 		update.execute(DROP_TABLE);
 	}
 	

@@ -12,17 +12,21 @@ public class UserTDG
 {
 	public static final String TABLE_NAME = "users";
 	public static final String TRUNCATE_TABLE = "TRUNCATE TABLE  " + TABLE_NAME + ";";
-	public static final String DROP_TABLE = "DROP TABLE  " + TABLE_NAME + ";";
+	public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 	public static final String FIND = "SELECT * FROM " + TABLE_NAME + " WHERE id = ?;";
 	public static final String FIND_BY_USERNAME = "SELECT * FROM users WHERE username = ?;";
 	public static final String GET_NEXT_ID = "SELECT max(id) AS id FROM users;";
-	public static final String INSERT = "INSERT INTO users(id, version, username, password) VALUES(?,?,?,?);";
+	public static final String INSERT = "INSERT INTO " + TABLE_NAME + " ("
+			+ "id, version, username, password) " 
+			+ "VALUES(?,?,?,?);";
 	public static final String CREATE_TABLE ="CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" 
 			+ "id BIGINT, "
 			+ "version int, "
 			+ "username VARCHAR(80), "
 			+ "password VARCHAR(80)"
 			+ ");";
+	
+	private static long nextID = -1L;
 
 	public static void createTable() throws SQLException {
 		Connection con = DbRegistry.getDbConnection();
@@ -33,8 +37,9 @@ public class UserTDG
 	public static void dropTable() throws SQLException {
 		Connection con = DbRegistry.getDbConnection();
 		Statement update = con.createStatement();
-		update.execute(TRUNCATE_TABLE);
-		update = con.createStatement();
+		//commented out the truncate table as it seems unnecessary
+		//update.execute(TRUNCATE_TABLE);
+		//update = con.createStatement();
 		update.execute(DROP_TABLE);
 	}
 	
@@ -54,7 +59,6 @@ public class UserTDG
 		return ps.executeQuery();
 	}
 	
-	private static long nextID = -1L;
 	
 	public static long getNextId() throws SQLException
 	{

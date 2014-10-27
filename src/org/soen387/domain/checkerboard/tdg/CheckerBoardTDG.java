@@ -12,7 +12,7 @@ public class CheckerBoardTDG {
 	public static final String TABLE_NAME = "CheckerBoard";
 	public static final String COLUMNS = "id, version, status, pieces, first_player, second_player, current_player ";
 	public static final String TRUNCATE_TABLE = "TRUNCATE TABLE  " + TABLE_NAME + ";";
-	public static final String DROP_TABLE = "DROP TABLE  " + TABLE_NAME + ";";
+	public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 	public static final String CREATE_TABLE ="CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" 
 			+ "id BIGINT, "
 			+ "version int, "
@@ -43,8 +43,9 @@ public class CheckerBoardTDG {
 	public static void dropTable() throws SQLException {
 		Connection con = DbRegistry.getDbConnection();
 		Statement update = con.createStatement();
-		update.execute(TRUNCATE_TABLE);
-		update = con.createStatement();
+		//commented out the truncate table as it seems unnecessary
+		//update.execute(TRUNCATE_TABLE);
+		//update = con.createStatement();
 		update.execute(DROP_TABLE);
 	}
 	
