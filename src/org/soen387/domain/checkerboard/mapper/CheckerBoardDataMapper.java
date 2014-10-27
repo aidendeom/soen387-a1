@@ -28,10 +28,10 @@ public class CheckerBoardDataMapper {
 		        l.add(new CheckerBoard(rs.getLong("id"),
 		        		rs.getInt("version"),
 		        		GameStatus.values()[rs.getInt("status")],
-		        		pieces,
-		        		new Player(rs.getLong("first_player")),
-		        		new Player(rs.getLong("second_player")),
-		        		new Player(rs.getLong("current_player"))
+		        		//pieces,
+		        		//new Player(rs.getLong("first_player")),
+		        		//new Player(rs.getLong("second_player")),
+		        		//new Player(rs.getLong("current_player"))
 		        		));
 		    }
 		    return l;
