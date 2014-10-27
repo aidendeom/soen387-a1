@@ -5,4 +5,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkers>
 <status>failed</status>
+<reason>${reason}</reason>
 </checkers>
