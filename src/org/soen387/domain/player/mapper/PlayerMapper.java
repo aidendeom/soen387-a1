@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.soen387.domain.model.player.Iplayer;
 import org.soen387.domain.model.player.Player;
 import org.soen387.domain.model.user.User;
 import org.soen387.domain.player.tdg.PlayerTDG;
@@ -13,11 +14,11 @@ import org.soen387.domain.user.mapper.UserMapper;
 public class PlayerMapper
 {
 
-    public static Player find(long id) throws SQLException
+    public static Iplayer find(long id) throws SQLException
     {
         ResultSet rs = PlayerTDG.find(id);
 
-        Player player = null;
+        Iplayer player = null;
         
         if (rs.next())
         	player = createPlayer(rs);
@@ -43,7 +44,7 @@ public class PlayerMapper
     	return players;
     }
     
-    public static int insert(Player player) throws SQLException
+    public static int insert(Iplayer player) throws SQLException
     {
         return PlayerTDG.insert(player.getId(),
                 player.getVersion(),

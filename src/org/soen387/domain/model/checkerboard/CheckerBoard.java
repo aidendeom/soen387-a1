@@ -2,13 +2,13 @@ package org.soen387.domain.model.checkerboard;
 
 import java.awt.Point;
 
-import org.soen387.domain.model.player.Player;
+import org.soen387.domain.model.player.Iplayer;
 
 public class CheckerBoard {
 
 	public CheckerBoard(long id, int version, GameStatus status,
-			char[][] pieces, Player firstPlayer, Player secondPlayer,
-			Player currentPlayer) {
+			char[][] pieces, Iplayer firstPlayer, Iplayer secondPlayer,
+			Iplayer currentPlayer) {
 		super();
 		this.id = id;
 		this.version = version;
@@ -43,27 +43,27 @@ public class CheckerBoard {
 		this.pieces = pieces;
 	}
 
-	public Player getFirstPlayer() {
+	public Iplayer getFirstPlayer() {
 		return firstPlayer;
 	}
 
-	public void setFirstPlayer(Player firstPlayer) {
+	public void setFirstPlayer(Iplayer firstPlayer) {
 		this.firstPlayer = firstPlayer;
 	}
 
-	public Player getSecondPlayer() {
+	public Iplayer getSecondPlayer() {
 		return secondPlayer;
 	}
 
-	public void setSecondPlayer(Player secondPlayer) {
+	public void setSecondPlayer(Iplayer secondPlayer) {
 		this.secondPlayer = secondPlayer;
 	}
 
-	public Player getCurrentPlayer() {
+	public Iplayer getCurrentPlayer() {
 		return currentPlayer;
 	}
 
-	public void setCurrentPlayer(Player currentPlayer) {
+	public void setCurrentPlayer(Iplayer currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
 
@@ -75,9 +75,9 @@ public class CheckerBoard {
 	int version;
 	GameStatus status;
 	char[][] pieces;
-	Player firstPlayer;
-	Player secondPlayer;
-	Player currentPlayer;
+	Iplayer firstPlayer;
+	Iplayer secondPlayer;
+	Iplayer currentPlayer;
 
 
 	public void move(Point source, Point target) {
