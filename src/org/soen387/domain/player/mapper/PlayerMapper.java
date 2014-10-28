@@ -14,7 +14,14 @@ import org.soen387.domain.user.mapper.UserMapper;
 
 public class PlayerMapper
 {
-    public static ThreadLocal<HashMap<Long, Player>> identityMap = new ThreadLocal<HashMap<Long,Player>>();
+    public static ThreadLocal<HashMap<Long, Player>> identityMap = new ThreadLocal<HashMap<Long,Player>>()
+    {
+        @Override
+        protected HashMap<Long, Player> initialValue()
+        {
+            return new HashMap<Long, Player>();
+        }
+    };
     
     public static Player find(long id) throws SQLException
     {
@@ -61,7 +68,8 @@ public class PlayerMapper
                 player.getVersion(),
                 player.getFirstName(),
                 player.getLastName(),
-                player.getEmail());
+                player.getEmail(),
+                player.getUser().getId());
 
     }
     

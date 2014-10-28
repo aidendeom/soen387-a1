@@ -15,7 +15,7 @@ public class PlayerTDG {
 	public static final String FIND_BY_ID = "SELECT * FROM "+ TABLE_NAME +" WHERE id = ?;";
 	public static final String FIND_BY_USER_ID = "SELECT * FROM "+ TABLE_NAME +" WHERE userid = ?;";
 	public static final String GET_NEXT_ID = "SELECT max(id) AS id FROM " + TABLE_NAME + ";";
-	public static final String INSERT = "INSERT INTO " + TABLE_NAME + " players(id, version, firstName, lastName, email, userid) VALUES(?,?,?,?,?,?);";
+	public static final String INSERT = "INSERT INTO " + TABLE_NAME + " (id, version, firstName, lastName, email, userid) VALUES(?,?,?,?,?,?);";
 	public static final String FIND_ALL = "SELECT * FROM " + TABLE_NAME + ";";
 	public static final String CREATE_TABLE ="CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" 
 			+ "id BIGINT, "
@@ -80,7 +80,8 @@ public class PlayerTDG {
                               int version,
                               String firstName,
                               String lastName,
-                              String email) throws SQLException
+                              String email,
+                              long userID) throws SQLException
     {
         Connection con = DbRegistry.getDbConnection();
         PreparedStatement ps = con.prepareStatement(INSERT);
@@ -90,6 +91,7 @@ public class PlayerTDG {
         ps.setString(3, firstName);
         ps.setString(4, lastName);
         ps.setString(5, email);
+        ps.setLong(6, userID);
         
         return ps.executeUpdate();
     }
