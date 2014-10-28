@@ -4,8 +4,6 @@ import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.dsrg.soenea.application.servlet.DispatcherServlet;
 import org.dsrg.soenea.application.servlet.Servlet;
@@ -13,9 +11,7 @@ import org.dsrg.soenea.service.MySQLConnectionFactory;
 import org.dsrg.soenea.service.registry.Registry;
 import org.dsrg.soenea.service.threadLocal.DbRegistry;
 
-/**
- * Servlet implementation class PageController
- */
+
 @WebServlet("/PageController")
 public abstract class AbstractPageController extends Servlet {
 	private static final long serialVersionUID = 1L;

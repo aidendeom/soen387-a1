@@ -10,13 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.dsrg.soenea.domain.MapperException;
-import org.soen387.domain.checkerboard.mapper.CheckerBoardDataMapper;
-import org.soen387.domain.model.checkerboard.CheckerBoard;
 import org.soen387.domain.model.player.Player;
-import org.soen387.domain.model.user.User;
 import org.soen387.domain.player.mapper.PlayerMapper;
-import org.soen387.domain.user.mapper.UserMapper;
 
 @WebServlet("/ListPlayers")
 public class ListPlayers extends AbstractPageController implements Servlet

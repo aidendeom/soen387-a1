@@ -1,8 +1,5 @@
 package org.soen387.domain.model.user;
 
-import java.sql.SQLException;
-
-import org.soen387.domain.user.tdg.UserTDG;
 
 public class User {
 	

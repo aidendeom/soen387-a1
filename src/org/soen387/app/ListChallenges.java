@@ -11,14 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.challenge.mapper.ChallengeMapper;
-import org.soen387.domain.challenge.tdg.ChallengeTDG;
-import org.soen387.domain.checkerboard.mapper.CheckerBoardDataMapper;
 import org.soen387.domain.model.challenge.Challenge;
-import org.soen387.domain.model.checkerboard.CheckerBoard;
 
-/**
- * Servlet implementation class ListGames
- */
 @WebServlet("/ListChallenges")
 public class ListChallenges extends AbstractPageController implements Servlet {
     private static final long serialVersionUID = 1L;
