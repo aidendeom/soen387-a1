@@ -3,6 +3,7 @@ package org.soen387.domain.player.mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.soen387.domain.model.player.IPlayer;
@@ -13,17 +14,22 @@ import org.soen387.domain.user.mapper.UserMapper;
 
 public class PlayerMapper
 {
-
+    public static ThreadLocal<HashMap<Long, Player>> identityMap = new ThreadLocal<HashMap<Long,Player>>();
+    
     public static Player find(long id) throws SQLException
     {
-        ResultSet rs = PlayerTDG.find(id);
-
-        Player player = null;
         
-        if (rs.next())
-        	player = createPlayer(rs);
-
-        rs.close();
+        Player player = identityMap.get().get(id);
+        
+        if (player == null)
+        {
+            ResultSet rs = PlayerTDG.find(id);
+            
+            if (rs.next())
+            	player = createPlayer(rs);
+    
+            rs.close();
+        }
         
         return player;
     }
@@ -36,7 +42,12 @@ public class PlayerMapper
     	
     	while (rs.next())
     	{
-    		players.add(createPlayer(rs));
+    	    Player p = identityMap.get().get(rs.getLong("id"));
+    	    
+    	    if (p == null)
+    	        p = createPlayer(rs);
+    	    
+    	    players.add(p);
     	}
     	
     	rs.close();
@@ -63,7 +74,11 @@ public class PlayerMapper
         String email = rs.getString("email");
         User user = UserMapper.find(idn);
         
-        return new Player(idn, version, firstName, lastName, email, user);
+        Player p = new Player(idn, version, firstName, lastName, email, user);
+        
+        identityMap.get().put(p.getId(), p);
+        
+        return p;
     }
 
 }
