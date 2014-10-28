@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.checkerboard.mapper.CheckerBoardDataMapper;
 import org.soen387.domain.model.checkerboard.CheckerBoard;
-import org.soen387.domain.model.player.Iplayer;
+import org.soen387.domain.model.player.IPlayer;
 import org.soen387.domain.model.user.User;
 import org.soen387.domain.player.mapper.PlayerMapper;
 import org.soen387.domain.user.mapper.UserMapper;
@@ -43,7 +43,7 @@ public class Login extends AbstractPageController implements Servlet {
 			User user = UserMapper.findByUsername(username);
 			if (user != null && password.equals(user.getPassword()))
 			{
-				Iplayer player = PlayerMapper.find(user.getId());
+				IPlayer player = PlayerMapper.find(user.getId());
 				
 				request.setAttribute("user", user);
 				request.setAttribute("player", player);

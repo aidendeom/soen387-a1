@@ -2,9 +2,11 @@ package org.soen387.domain.model.player;
 
 import org.soen387.domain.model.user.User;
 
-public interface Iplayer {
+public interface IPlayer {
 
 	public abstract long getId();
+	
+	public abstract void setId(long id);
 
 	public abstract int getVersion();
 
@@ -21,8 +23,6 @@ public interface Iplayer {
 	public abstract String getEmail();
 
 	public abstract void setEmail(String email);
-
-	public abstract void setId(long id);
 
 	public abstract User getUser();
 

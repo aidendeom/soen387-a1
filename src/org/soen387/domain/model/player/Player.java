@@ -6,7 +6,7 @@ import org.soen387.domain.model.user.User;
  * 
  *This is a complete stub. 
  */
-public class Player implements Iplayer {
+public class Player implements IPlayer {
 	long id;
 	int version;
 	String firstName;

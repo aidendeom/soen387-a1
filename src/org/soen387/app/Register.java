@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.checkerboard.mapper.CheckerBoardDataMapper;
 import org.soen387.domain.model.checkerboard.CheckerBoard;
-import org.soen387.domain.model.player.Iplayer;
+import org.soen387.domain.model.player.IPlayer;
 import org.soen387.domain.model.player.Player;
 import org.soen387.domain.model.user.User;
 import org.soen387.domain.player.mapper.PlayerMapper;
@@ -50,7 +50,7 @@ public class Register extends AbstractPageController implements Servlet
             String lastName = request.getParameter("lastname");
             String email = request.getParameter("email");
             
-            Iplayer player = new Player(id, 1, firstName, lastName, email, user);
+            IPlayer player = new Player(id, 1, firstName, lastName, email, user);
             
             UserMapper.insert(user);
             PlayerMapper.insert(player);

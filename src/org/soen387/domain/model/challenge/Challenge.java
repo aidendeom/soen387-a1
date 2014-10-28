@@ -1,16 +1,15 @@
 package org.soen387.domain.model.challenge;
 
-import org.soen387.domain.model.checkerboard.GameStatus;
-import org.soen387.domain.model.player.Iplayer;
+import org.soen387.domain.model.player.IPlayer;
 
 public class Challenge {
 	
 	long id;
-	Iplayer challenger;
-	Iplayer challengee;
+	IPlayer challenger;
+	IPlayer challengee;
 	ChallengeStatus status;
 
-	public Challenge(long id, Iplayer challenger, Iplayer challengee, ChallengeStatus status){
+	public Challenge(long id, IPlayer challenger, IPlayer challengee, ChallengeStatus status){
 		super();
 		this.id = id;
 		this.challenger = challenger;
@@ -18,19 +17,19 @@ public class Challenge {
 		this.status = status;
 	}
 
-	public Iplayer getChallenger() {
+	public IPlayer getChallenger() {
 		return challenger;
 	}
 
-	public void setChallenger(Iplayer challenger) {
+	public void setChallenger(IPlayer challenger) {
 		this.challenger = challenger;
 	}
 
-	public Iplayer getChallengee() {
+	public IPlayer getChallengee() {
 		return challengee;
 	}
 
-	public void setChallengee(Iplayer challengee) {
+	public void setChallengee(IPlayer challengee) {
 		this.challengee = challengee;
 	}
 
