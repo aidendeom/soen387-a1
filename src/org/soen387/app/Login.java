@@ -39,7 +39,7 @@ public class Login extends AbstractPageController implements Servlet
     {
         HttpSession session = request.getSession();
         
-        if (!isLoggedIn(session))
+        if (!Utils.isLoggedIn(session))
         {
             try
             {
@@ -93,11 +93,5 @@ public class Login extends AbstractPageController implements Servlet
                 .forward(request, response);
     }
 
-    private static boolean isLoggedIn(HttpSession session)
-    {
-        Object userID = session.getAttribute("userid");
-        Object playerID = session.getAttribute("playerid");
 
-        return userID != null && playerID != null;
-    }
 }

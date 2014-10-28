@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.soen387.domain.model.player.IPlayer;
 import org.soen387.domain.model.player.Player;
@@ -33,32 +34,72 @@ public class Register extends AbstractPageController implements Servlet
                                   HttpServletResponse response) throws ServletException,
                                                                        IOException
     {
-        try
+        HttpSession session = request.getSession();
+        if (!Utils.isLoggedIn(session))
         {
-            long id = UserMapper.getNextId();
-            
-            String username = request.getParameter("user");
-            String password = request.getParameter("pass");
-            
-            User user = new User(id, 1, username, password);
-            
-            String firstName = request.getParameter("firstname");
-            String lastName = request.getParameter("lastname");
-            String email = request.getParameter("email");
-            
-            IPlayer player = new Player(id, 1, firstName, lastName, email, user);
-            
-            UserMapper.insert(user);
-            PlayerMapper.insert(player);
-            
-            request.setAttribute("user", user);
-            request.setAttribute("player", player);
-            
-            request.getRequestDispatcher("/WEB-INF/jsp/xml/login.jsp").forward(request,  response);
+            try
+            {
+                long uid = UserMapper.getNextId();
+                
+                String username = request.getParameter("user");
+                String password = request.getParameter("pass");
+                String firstName = request.getParameter("firstname");
+                String lastName = request.getParameter("lastname");
+                String email = request.getParameter("email");
+                
+                if (!Utils.isNullOrEmpty(username)
+                        && !Utils.isNullOrEmpty(password)
+                        && !Utils.isNullOrEmpty(firstName)
+                        && !Utils.isNullOrEmpty(lastName)
+                        && !Utils.isNullOrEmpty(email))
+                {
+                    User user = UserMapper.findByUsername(username); 
+                    
+                    if (user == null)
+                    {                
+                        user = new User(uid, 1, username, password);
+                        
+                        if (!PlayerMapper.emailExists(email))
+                        {
+                            long pid = PlayerMapper.getNextID();
+                            
+                            IPlayer player = new Player(pid, 1, firstName, lastName, email, user);
+                            
+                            UserMapper.insert(user);
+                            PlayerMapper.insert(player);
+                            
+                            
+                            request.setAttribute("user", user.getUsername());
+                            request.setAttribute("pass", user.getPassword());
+                            response.sendRedirect(String.format("/soen387-a1/Login?user=%s&pass=%s", user.getUsername(), user.getPassword()));
+                        }
+                        else
+                        {
+                            request.setAttribute("reason", "Email already exists");
+                            request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request,  response);
+                        }
+                    }
+                    else
+                    {
+                        request.setAttribute("reason", "Username already exists");
+                        request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request,  response);
+                    }
+                }
+                else
+                {
+                    request.setAttribute("reason", "Incorrect number of parameters");
+                    request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request,  response);
+                }
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
         }
-        catch (SQLException e)
+        else
         {
-            e.printStackTrace();
+            request.setAttribute("reason", "Already logged in");
+            request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request,  response);
         }
     }
 }

@@ -25,9 +25,10 @@ public class PlayerTDG {
 			+ "email VARCHAR(80), "
 			+ "userid BIGINT"
 			+ ");";
+	public static final String EMAIL_EXISTS = "SELECT email FROM " + TABLE_NAME +
+	        " WHERE email = ?;";
 	
 	private static long nextID = -1L;
-
 	
 	public static void createTable() throws SQLException {
 		Connection con = DbRegistry.getDbConnection();
@@ -102,5 +103,13 @@ public class PlayerTDG {
         PreparedStatement ps = con.prepareStatement(FIND_ALL);
         return ps.executeQuery();
 	}
+
+    public static ResultSet emailExists(String email) throws SQLException
+    {
+        Connection con = DbRegistry.getDbConnection();
+        PreparedStatement ps = con.prepareStatement(EMAIL_EXISTS);
+        ps.setString(1, email);
+        return ps.executeQuery();
+    }
 
 }

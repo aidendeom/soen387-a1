@@ -33,15 +33,16 @@ public class Logout extends AbstractPageController implements Servlet {
         session.removeAttribute("userid");
         session.removeAttribute("playerid");
         
+        session.invalidate();
+        
         if (userID != null && playerID != null)
         {        
             request.setAttribute("status", "success");
-            request.getRequestDispatcher("/WEB-INF/jsp/xml/logout.jsp").forward(request, response);
         }
         else
         {
             request.setAttribute("status", "failed");
-            request.getRequestDispatcher("/WEB-INF/jsp/xml/logout.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("/WEB-INF/jsp/xml/logout.jsp").forward(request, response);
     }
 }

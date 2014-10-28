@@ -73,6 +73,22 @@ public class PlayerMapper
 
     }
     
+    public static boolean emailExists(String email) throws SQLException
+    {
+        ResultSet rs = PlayerTDG.emailExists(email);
+        
+        boolean result = rs.next();
+        
+        rs.close();
+        
+        return result;
+    }
+    
+    public static long getNextID() throws SQLException
+    {
+        return PlayerTDG.getNextId();
+    }
+    
     private static Player createPlayer(ResultSet rs) throws SQLException
     {        
         long idn = rs.getLong("id");
