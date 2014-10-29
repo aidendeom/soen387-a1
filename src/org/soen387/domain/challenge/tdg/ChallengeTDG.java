@@ -15,11 +15,11 @@ public class ChallengeTDG {
 	public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
 	public static final String FIND_BY_ID = "SELECT * FROM "+ TABLE_NAME +" WHERE id = ?;";
 	public static final String GET_NEXT_ID = "SELECT max(id) AS id FROM " + TABLE_NAME + ";";
-	public static final String INSERT = "INSERT INTO " + TABLE_NAME + " (id, version, challengerId, challengeeId, statusId) VALUES(?,?,?,?,?);";
+	public static final String INSERT = "INSERT INTO " + TABLE_NAME + " (id, version, challengerId, challengeeId, status) VALUES(?,?,?,?,?);";
 	public static final String FIND_ALL = "SELECT * FROM " + TABLE_NAME + ";";
 	public static final String CREATE_TABLE ="CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" 
 			+ "id BIGINT, "
-	        + "version int"
+	        + "version int, "
 			+ "challengerId BIGINT, "
 			+ "challengeeId BIGINT, "
 			+ "status int"
@@ -113,4 +113,33 @@ public class ChallengeTDG {
         
         return result;
     }
+    
+    public static final String UPDATE ="UPDATE " + TABLE_NAME + " "
+    		+ "SET id=?, "
+			+ "version=?, "
+			+ "challengerId=?, "
+			+ "challengeeId=?, "
+			+ "status=? "
+			+ "WHERE id=? AND version=?;"; 
+    		
+	public static int update(long id, 
+							  int version, 
+							  long challengerId,
+							  long challengeeId,
+							  int status) throws SQLException 
+	{
+		Connection con = DbRegistry.getDbConnection();
+        PreparedStatement ps = con.prepareStatement(UPDATE);
+        ps.setLong(1, id);
+        ps.setInt(2, version);
+        ps.setLong(3, challengerId);
+        ps.setLong(4, challengeeId);
+        ps.setInt(5, status);
+        ps.setLong(6,  id);
+        ps.setInt(7, version-1);
+        
+        int result = ps.executeUpdate();
+        ps.close();
+        return result;
+	}
 }

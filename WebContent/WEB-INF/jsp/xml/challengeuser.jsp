@@ -5,12 +5,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkers>
 <status>success</status>
- <challenges>
- <c:forEach var="chal" items="${challenges }">
-  <challenge id="${chal.id}" version="${chal.version}" status="${chal.status}">
-   <challenger refid="${chal.challenger.id}" />
-   <challengee refid="${chal.challengee.id}" />
-  </challenge>
-</c:forEach>
- </challenges>
+<challenge status="${challenge.status}" id="${challenge.id}" version="${challenge.version}">
+<challenger refid="${challenge.challenger.id}" />
+<challengee refid="${challenge.challengee.id}" />
+</challenge>
 </checkers>

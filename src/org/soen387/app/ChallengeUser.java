@@ -17,8 +17,9 @@ import org.soen387.domain.model.challenge.Challenge;
 import org.soen387.domain.model.checkerboard.GameStatus;
 import org.soen387.domain.model.player.Player;
 import org.soen387.domain.player.mapper.PlayerMapper;
+import org.soen387.domain.user.mapper.UserMapper;
 
-@WebServlet("ChallengeUser")
+@WebServlet("/ChallengeUser")
 public class ChallengeUser extends AbstractPageController implements Servlet {
     private static final long serialVersionUID = 1L;
        
@@ -44,16 +45,21 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
                 Player thisPlayer = PlayerMapper.find(id);
                 Player otherPlayer = PlayerMapper.find(id2);
                 
-                // TODO: This should should return whether or not there are any open challenges between two users
-                // (there should only ever be on)
-                // Something similar for games (CheckerBoards?)
                 if (!ChallengeMapper.challengeExists(thisPlayer, otherPlayer)
                         && !CheckerBoardDataMapper.gameExists(thisPlayer, otherPlayer))
                 {
                     Challenge c = new Challenge(thisPlayer, otherPlayer);
+                    ChallengeMapper.insert(c);
+                    request.setAttribute("challenge", c);
+                    request.getRequestDispatcher("/WEB-INF/jsp/xml/challengeuser.jsp").forward(request, response);
+                } else {
+                	request.setAttribute("reason", "Open Challenge or Game exists");
+                	request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
                 }
+            } else {
+            	request.setAttribute("reason", "User not logged in!");
+            	request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
             }
-            request.getRequestDispatcher("/WEB-INF/jsp/xml/challengeuser.jsp").forward(request, response);
         } catch (MapperException e) {
 
             e.printStackTrace();

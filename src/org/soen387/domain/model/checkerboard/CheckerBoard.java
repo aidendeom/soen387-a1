@@ -1,7 +1,10 @@
 package org.soen387.domain.model.checkerboard;
 
 import java.awt.Point;
+import java.sql.SQLException;
 
+import org.dsrg.soenea.domain.MapperException;
+import org.soen387.domain.checkerboard.mapper.CheckerBoardDataMapper;
 import org.soen387.domain.model.player.IPlayer;
 
 public class CheckerBoard {
@@ -17,6 +20,28 @@ public class CheckerBoard {
 		this.firstPlayer = firstPlayer;
 		this.secondPlayer = secondPlayer;
 		this.currentPlayer = currentPlayer;
+	}
+	
+	public CheckerBoard(IPlayer firstPlayer, IPlayer secondPlayer) throws MapperException{
+		this(CheckerBoardDataMapper.getNextId(), 1, GameStatus.Ongoing, createDefaultPieces(), firstPlayer, secondPlayer, firstPlayer);
+	}
+	
+	private static char[][] createDefaultPieces(){
+		char[][] pieces = new char[8][8];
+        for(int i=0; i < 8; i++)
+        {
+            for(int j=0; j < 8; j+=2)
+            {
+            	if(i < 3) {
+            		pieces[j][i] = 'r';
+                } else if(i > 4) {
+                    pieces[j][i] = 'b';
+                } else {
+                	pieces[j][i] = ' ';
+                }
+            }
+        }
+        return pieces;
 	}
 
 	public int getVersion() {
@@ -86,5 +111,16 @@ public class CheckerBoard {
 	
 	public void jump(Point source, Point... targets) {
 		
+	}
+	
+	public String getStringPieces(){
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < pieces.length; i++) {
+			for (int j = 0; j < pieces[i].length; j++) {
+				sb.append(pieces[j][i]);
+			}
+		}
+		
+		return sb.toString();
 	}
 }

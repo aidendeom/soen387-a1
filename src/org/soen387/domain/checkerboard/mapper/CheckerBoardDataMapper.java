@@ -101,6 +101,27 @@ public class CheckerBoardDataMapper {
         }
     }
 
+	public static long getNextId() throws MapperException {
+		try {
+			return CheckerBoardTDG.getNextId();
+		} catch (SQLException e) {
+			throw new MapperException(e);
+		}
+	}
+
+	public static int insert(CheckerBoard g) throws MapperException {
+		try {
+			identityMap.get().put(g.getId(), g);
+			return CheckerBoardTDG.insert(g.getId(), g.getVersion(), 
+					g.getStatus().getId(), g.getStringPieces(), g.getFirstPlayer().getId(), 
+					g.getSecondPlayer().getId(), g.getCurrentPlayer().getId());
+			
+		} catch (SQLException e) {
+			throw new MapperException(e);
+		}
+		
+	}
+
 
 	
 }

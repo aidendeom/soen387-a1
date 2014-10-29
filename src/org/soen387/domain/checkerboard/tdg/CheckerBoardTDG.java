@@ -10,10 +10,11 @@ import org.dsrg.soenea.service.threadLocal.DbRegistry;
 
 public class CheckerBoardTDG {
 	public static final String TABLE_NAME = "CheckerBoard";
+	public static final String GET_NEXT_ID = "SELECT max(id) AS id FROM " + TABLE_NAME + ";";
 	public static final String COLUMNS = "id, version, status, pieces, first_player, second_player, current_player ";
 	public static final String TRUNCATE_TABLE = "TRUNCATE TABLE  " + TABLE_NAME + ";";
 	public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
-	public static final String CREATE_TABLE ="CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (" 
+	public static final String CREATE_TABLE ="CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
 			+ "id BIGINT, "
 			+ "version int, "
 			+ "status int, "
@@ -34,6 +35,8 @@ public class CheckerBoardTDG {
 	public static final String DELETE = "DELETE FROM " + TABLE_NAME + " "
 			+ "WHERE id=? AND version=?;";
 
+	private static long nextID = -1L;
+	
 	public static void createTable() throws SQLException {
 		Connection con = DbRegistry.getDbConnection();
 		Statement update = con.createStatement();
@@ -85,8 +88,8 @@ public class CheckerBoardTDG {
 	}
 
 	public static final String GAME_EXISTS = "SELECT * FROM " + TABLE_NAME
-	        + " WHERE (player1Id = ? AND player2Id = ?)"
-	        + " OR (player2Id = ? AND player1Id = ?) " 
+	        + " WHERE (first_player = ? AND second_player = ?)"
+	        + " OR (first_player = ? AND second_player = ?) " 
 	        + " AND status = 0;";
 	
     public static boolean gameExists(long id1, long id2) throws SQLException
@@ -106,5 +109,21 @@ public class CheckerBoardTDG {
         
         return result;
     }
+
+	public static long getNextId() throws SQLException {
+		if (nextID == -1L)
+		{
+			Connection con = DbRegistry.getDbConnection();
+			PreparedStatement ps = con.prepareStatement(GET_NEXT_ID);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next())
+			{
+				nextID = rs.getLong("id");
+			}
+		}
+		
+		return ++nextID;
+
+	}
 	
 }

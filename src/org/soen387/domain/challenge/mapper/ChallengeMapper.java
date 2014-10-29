@@ -129,10 +129,20 @@ public class ChallengeMapper
         IPlayer challenger = new PlayerProxy(challengerID);
         IPlayer challengee = new PlayerProxy(challengeeID);
         
-        Challenge c = new Challenge(id, 1, challenger, challengee, ChallengeStatus.Open);
+        Challenge c = new Challenge(id, 1, challenger, challengee, ChallengeStatus.values()[rs.getInt("status")]);
         
         identityMap.get().put(c.getId(), c);
         
         return c;
     }
+
+	public static int update(Challenge c) throws MapperException  {
+		try {
+			return ChallengeTDG.update(c.getId(), c.getVersion(), c.getChallenger().getId(),
+					c.getChallengee().getId(), c.getStatus().getId());
+		} catch (SQLException e) {
+			throw new MapperException(e);
+		}
+		
+	}
 }

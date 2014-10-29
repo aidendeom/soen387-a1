@@ -39,6 +39,7 @@ public class Init {
 	}
 	
 	public static void prepareTables(){
+		
 		try {
 			UserTDG.dropTable();
 			UserTDG.createTable();
