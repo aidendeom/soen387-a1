@@ -83,5 +83,28 @@ public class CheckerBoardTDG {
 	    ps.setLong(2, id);
 	    return ps.executeQuery();
 	}
+
+	public static final String GAME_EXISTS = "SELECT * FROM " + TABLE_NAME
+	        + " WHERE (player1Id = ? AND player2Id = ?)"
+	        + " OR (player2Id = ? AND player1Id = ?) " 
+	        + " AND status = 0;";
+	
+    public static boolean gameExists(long id1, long id2) throws SQLException
+    {
+        Connection con = DbRegistry.getDbConnection();
+        PreparedStatement ps = con.prepareStatement(GAME_EXISTS);
+        ps.setLong(1, id1);
+        ps.setLong(2, id2);
+        ps.setLong(3, id2);
+        ps.setLong(4, id1);
+        
+        ResultSet rs = ps.executeQuery();
+        
+        boolean result = rs.next();
+        
+        rs.close();
+        
+        return result;
+    }
 	
 }

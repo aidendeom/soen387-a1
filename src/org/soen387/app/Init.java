@@ -70,7 +70,7 @@ public class Init {
 		try {
 			ChallengeTDG.dropTable();
 			ChallengeTDG.createTable();
-			System.out.println("Created CheckerBoard Table");
+			System.out.println("Created Challenge Table");
 		} catch (SQLException e) {
 			System.out.println("Error creating challenge Table");
 			e.printStackTrace();

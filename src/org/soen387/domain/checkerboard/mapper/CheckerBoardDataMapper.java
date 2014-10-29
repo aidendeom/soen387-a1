@@ -1,5 +1,7 @@
 package org.soen387.domain.checkerboard.mapper;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,10 +9,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.dsrg.soenea.domain.MapperException;
+import org.dsrg.soenea.service.threadLocal.DbRegistry;
+import org.soen387.domain.challenge.tdg.ChallengeTDG;
 import org.soen387.domain.checkerboard.tdg.CheckerBoardTDG;
 import org.soen387.domain.model.checkerboard.CheckerBoard;
 import org.soen387.domain.model.checkerboard.GameStatus;
 import org.soen387.domain.model.player.IPlayer;
+import org.soen387.domain.model.player.Player;
 import org.soen387.domain.model.player.PlayerProxy;
 
 public class CheckerBoardDataMapper {
@@ -83,4 +88,19 @@ public class CheckerBoardDataMapper {
             throw new MapperException(e);
         }
 	}
+	
+    public static boolean gameExists(IPlayer p1, IPlayer p2) throws MapperException
+    {
+        try
+        {
+            return CheckerBoardTDG.gameExists(p1.getId(), p2.getId());
+        }
+        catch (SQLException e)
+        {
+            throw new MapperException(e);
+        }
+    }
+
+
+	
 }

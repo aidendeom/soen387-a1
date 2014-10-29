@@ -93,7 +93,8 @@ public class ChallengeTDG {
 
 	public static final String CHALLENGE_EXISTS = "SELECT * FROM " + TABLE_NAME
 	        + " WHERE (challengerId = ? AND challengeeId = ?)"
-	        + " OR (challengerId = ? AND challengeeId = ?);";
+	        + " OR (challengerId = ? AND challengeeId = ?) "
+	        + " AND status = 0;";
 	
     public static boolean challengeExists(long id1, long id2) throws SQLException
     {
