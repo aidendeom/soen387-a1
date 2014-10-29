@@ -3,6 +3,7 @@ package org.soen387.domain.user.mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.model.user.User;
 import org.soen387.domain.user.tdg.UserTDG;
 
@@ -19,15 +20,22 @@ public class UserMapper {
 		return user;
 	}
 	
-	public static User findByUsername(String username) throws SQLException
+	public static User findByUsername(String username) throws MapperException
 	{
-		ResultSet rs = UserTDG.findByUsername(username);
-		
-		User user = createUser(rs);
-		
-		rs.close();
-		
-		return user;
+	    try
+	    {
+    		ResultSet rs = UserTDG.findByUsername(username);
+    		
+    		User user = createUser(rs);
+    		
+    		rs.close();
+    		
+    		return user;
+	    }
+	    catch (SQLException e)
+	    {
+	        throw new MapperException(e);
+	    }
 	}
 	
 	public static long getNextId() throws SQLException

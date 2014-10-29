@@ -1,7 +1,6 @@
 package org.soen387.app;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -10,14 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.model.player.IPlayer;
 import org.soen387.domain.model.user.User;
 import org.soen387.domain.player.mapper.PlayerMapper;
 import org.soen387.domain.user.mapper.UserMapper;
 
-/**
- * Servlet implementation class ListGames
- */
 @WebServlet("/Login")
 public class Login extends AbstractPageController implements Servlet
 {
@@ -72,7 +69,7 @@ public class Login extends AbstractPageController implements Servlet
                 }
     
             }
-            catch (SQLException e)
+            catch (MapperException e)
             {
                 e.printStackTrace();
             }
