@@ -1,7 +1,6 @@
 package org.soen387.domain.model.player;
 
-import java.sql.SQLException;
-
+import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.model.user.User;
 import org.soen387.domain.player.mapper.PlayerMapper;
 
@@ -9,26 +8,26 @@ public class PlayerProxy implements IPlayer
 {
     long id;
     Player innerObject;
-    
+
     public PlayerProxy(long id)
     {
         this.id = id;
     }
-    
+
     private Player getInnerObject()
     {
+        try
+        {
             if (innerObject == null)
             {
-                try
-                {
-                    innerObject = PlayerMapper.find(id);
-                }
-                catch (SQLException ex)
-                {
-                    ex.printStackTrace();
-                }
+                innerObject = PlayerMapper.find(id);
             }
-            
+        }
+        catch (MapperException ex)
+        {
+            ex.printStackTrace();
+        }
+        
         return innerObject;
     }
 
@@ -37,11 +36,11 @@ public class PlayerProxy implements IPlayer
     {
         return getInnerObject().getId();
     }
-    
+
     @Override
     public void setId(long id)
     {
-        getInnerObject().setId(id);   
+        getInnerObject().setId(id);
     }
 
     @Override
