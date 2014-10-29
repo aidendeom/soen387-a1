@@ -38,14 +38,28 @@ public class UserMapper {
 	    }
 	}
 	
-	public static long getNextId() throws SQLException
+	public static long getNextId() throws MapperException
 	{
-	    return UserTDG.getNextId();
+	    try
+	    {
+	        return UserTDG.getNextId();
+	    }
+	    catch (SQLException e)
+	    {
+	        throw new MapperException(e);
+	    }
 	}
 
-    public static int insert(User user) throws SQLException
+    public static int insert(User user) throws MapperException
     {
-        return UserTDG.insert(user.getId(), user.getVersion(), user.getUsername(), user.getPassword());
+        try
+        {
+            return UserTDG.insert(user.getId(), user.getVersion(), user.getUsername(), user.getPassword());
+        }
+        catch (SQLException e)
+        {
+            throw new MapperException(e);
+        }
     }
     
     private static User createUser(ResultSet rs) throws SQLException

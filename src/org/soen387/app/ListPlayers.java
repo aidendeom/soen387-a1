@@ -1,7 +1,6 @@
 package org.soen387.app;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.Servlet;
@@ -10,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.model.player.Player;
 import org.soen387.domain.player.mapper.PlayerMapper;
 
@@ -37,7 +37,7 @@ public class ListPlayers extends AbstractPageController implements Servlet
         	request.setAttribute("players", players);
         	request.getRequestDispatcher("/WEB-INF/jsp/xml/listplayers.jsp").forward(request,  response);
         }
-        catch (SQLException e)
+        catch (MapperException e)
         {
             e.printStackTrace();
         }

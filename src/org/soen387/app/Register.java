@@ -1,7 +1,6 @@
 package org.soen387.app;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.model.player.IPlayer;
 import org.soen387.domain.model.player.Player;
 import org.soen387.domain.model.user.User;
@@ -91,7 +91,7 @@ public class Register extends AbstractPageController implements Servlet
                     request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request,  response);
                 }
             }
-            catch (SQLException e)
+            catch (MapperException e)
             {
                 e.printStackTrace();
             }

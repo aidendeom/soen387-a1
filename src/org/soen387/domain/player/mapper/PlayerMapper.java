@@ -48,65 +48,100 @@ public class PlayerMapper
         }
     }
 
-    public static List<Player> findAll() throws SQLException
+    public static List<Player> findAll() throws MapperException
     {
-        ResultSet rs = PlayerTDG.findAll();
-
-        List<Player> players = new ArrayList<Player>();
-
-        while (rs.next())
+        try
         {
-            Player p = identityMap.get().get(rs.getLong("id"));
-
-            if (p == null)
-                p = createPlayer(rs);
-
-            players.add(p);
+            ResultSet rs = PlayerTDG.findAll();
+    
+            List<Player> players = new ArrayList<Player>();
+    
+            while (rs.next())
+            {
+                Player p = identityMap.get().get(rs.getLong("id"));
+    
+                if (p == null)
+                    p = createPlayer(rs);
+    
+                players.add(p);
+            }
+    
+            rs.close();
+    
+            return players;
         }
-
-        rs.close();
-
-        return players;
+        catch (SQLException e)
+        {
+            throw new MapperException(e);
+        }
     }
 
-    public static int insert(IPlayer player) throws SQLException
+    public static int insert(IPlayer player) throws MapperException
     {
+        try
+        {
         return PlayerTDG.insert(player.getId(), player.getVersion(),
                 player.getFirstName(), player.getLastName(), player.getEmail(),
                 player.getUser().getId());
+        }
+        catch (SQLException e)
+        {
+            throw new MapperException(e);
+        }
 
     }
 
-    public static boolean emailExists(String email) throws SQLException
+    public static boolean emailExists(String email) throws MapperException
     {
-        ResultSet rs = PlayerTDG.emailExists(email);
-
-        boolean result = rs.next();
-
-        rs.close();
-
-        return result;
+        try
+        {
+            ResultSet rs = PlayerTDG.emailExists(email);
+    
+            boolean result = rs.next();
+    
+            rs.close();
+    
+            return result;
+        }
+        catch (SQLException e)
+        {
+            throw new MapperException(e);
+        }
     }
 
-    public static long getNextID() throws SQLException
+    public static long getNextID() throws MapperException
     {
-        return PlayerTDG.getNextId();
+        try
+        {
+            return PlayerTDG.getNextId();
+        }
+        catch (SQLException e)
+        {
+            throw new MapperException(e);
+        }
     }
 
-    private static Player createPlayer(ResultSet rs) throws SQLException
+    private static Player createPlayer(ResultSet rs) throws MapperException
     {
-        long idn = rs.getLong("id");
-        int version = rs.getInt("version");
-        String firstName = rs.getString("firstName");
-        String lastName = rs.getString("lastName");
-        String email = rs.getString("email");
-        User user = UserMapper.find(idn);
-
-        Player p = new Player(idn, version, firstName, lastName, email, user);
-
-        identityMap.get().put(p.getId(), p);
-
-        return p;
+        try
+        {
+            long idn = rs.getLong("id");
+            int version = rs.getInt("version");
+            String firstName = rs.getString("firstName");
+            String lastName = rs.getString("lastName");
+            String email = rs.getString("email");
+            User user = UserMapper.find(idn);
+        
+            Player p = new Player(idn, version, firstName, lastName, email, user);
+        
+            identityMap.get().put(p.getId(), p);
+        
+            return p;
+        }
+        catch (SQLException e)
+        {
+            throw new MapperException(e);
+        }
     }
 
 }
