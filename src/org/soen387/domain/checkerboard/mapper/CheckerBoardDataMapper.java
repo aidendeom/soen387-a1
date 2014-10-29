@@ -3,6 +3,7 @@ package org.soen387.domain.checkerboard.mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.dsrg.soenea.domain.MapperException;
@@ -14,29 +15,53 @@ import org.soen387.domain.model.player.PlayerProxy;
 
 public class CheckerBoardDataMapper {
 	
+    public static ThreadLocal<HashMap<Long, CheckerBoard>> identityMap = new ThreadLocal<HashMap<Long, CheckerBoard>>()
+    {
+        @Override
+        protected HashMap<Long, CheckerBoard> initialValue()
+        {
+            return new HashMap<Long, CheckerBoard>();
+        }
+    };
+    
 	public static List<CheckerBoard> buildCollection(ResultSet rs)
 		    throws SQLException {
 		    ArrayList<CheckerBoard> l = new ArrayList<CheckerBoard>();
-		    while(rs.next()) {
-		    	String piecesString = rs.getString("pieces");
-		    	char[][] pieces = new char[8][8];
-		    	for(int i=0; i < 8; i++) {
-		    		for(int j=0; j < 8; j++) {
-		    			pieces[j][i] = piecesString.charAt(i*8+j);
-		    		}
-		    	}
+		    while(rs.next())
+		    {
+		        CheckerBoard b = identityMap.get().get(rs.getLong("id"));
+		    	if (b == null)
+		    	    b = createBoard(rs);
 		    	
-		        l.add(new CheckerBoard(rs.getLong("id"),
-		        		rs.getInt("version"),
-		        		GameStatus.values()[rs.getInt("status")],
-		        		pieces,
-		        		new PlayerProxy(rs.getLong("first_player")),
-		        		new PlayerProxy(rs.getLong("second_player")),
-		        		new PlayerProxy(rs.getLong("current_player"))
-		        		));
+		        l.add(b);
 		    }
 		    return l;
 		}
+	
+	private static CheckerBoard createBoard(ResultSet rs) throws SQLException
+	{
+            String piecesString = rs.getString("pieces");
+            char[][] pieces = new char[8][8];
+            for(int i=0; i < 8; i++)
+            {
+                for(int j=0; j < 8; j++)
+                {
+                    pieces[j][i] = piecesString.charAt(i*8+j);
+                }
+            }
+            
+            CheckerBoard b = new CheckerBoard(rs.getLong("id"),
+                    rs.getInt("version"),
+                    GameStatus.values()[rs.getInt("status")],
+                    pieces,
+                    new PlayerProxy(rs.getLong("first_player")),
+                    new PlayerProxy(rs.getLong("second_player")),
+                    new PlayerProxy(rs.getLong("current_player")));
+            
+            identityMap.get().put(b.getId(), b);
+            
+            return b;
+	}
 
 	public static List<CheckerBoard> findAll() throws MapperException {
         try {

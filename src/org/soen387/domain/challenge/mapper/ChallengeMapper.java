@@ -3,6 +3,7 @@ package org.soen387.domain.challenge.mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.dsrg.soenea.domain.MapperException;
@@ -14,20 +15,39 @@ import org.soen387.domain.model.player.PlayerProxy;
 
 public class ChallengeMapper
 {
-    public static Challenge find(long id) throws SQLException
+    public static ThreadLocal<HashMap<Long, Challenge>> identityMap = new ThreadLocal<HashMap<Long, Challenge>>()
     {
-        ResultSet rs = ChallengeTDG.find(id);
-        
-        Challenge c = null;
-        
-        if (rs.next())
+        @Override
+        protected HashMap<Long, Challenge> initialValue()
         {
-            c = createChallenge(rs);
+            return new HashMap<Long, Challenge>();
         }
-        
-        rs.close();
-        
-        return c;
+    };
+    
+    public static Challenge find(long id) throws MapperException
+    {
+        try
+        {
+            Challenge c = identityMap.get().get(id);
+            
+            if (c == null)
+            {
+                ResultSet rs = ChallengeTDG.find(id);
+                
+                if (rs.next())
+                {
+                    c = createChallenge(rs);
+                }
+                
+                rs.close();
+            }
+            
+            return c;
+        }
+        catch (SQLException e)
+        {
+            throw new MapperException(e);
+        }
     }
 
     public static List<Challenge> findAll() throws MapperException
@@ -40,7 +60,12 @@ public class ChallengeMapper
             
             while (rs.next())
             {
-                challenges.add(createChallenge(rs));
+                Challenge c = identityMap.get().get(rs.getLong("id"));
+                if (c == null)
+                {
+                    c = createChallenge(rs);
+                    challenges.add(c);
+                }
             }
             
             rs.close();
@@ -49,8 +74,7 @@ public class ChallengeMapper
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
-            throw new MapperException("ChallengeMapper failed!");
+            throw new MapperException(e);
         }
     }
     
@@ -64,6 +88,10 @@ public class ChallengeMapper
         IPlayer challenger = new PlayerProxy(challengerID);
         IPlayer challengee = new PlayerProxy(challengeeID);
         
-        return new Challenge(id, challenger, challengee, ChallengeStatus.Open);
+        Challenge c = new Challenge(id, challenger, challengee, ChallengeStatus.Open);
+        
+        identityMap.get().put(c.getId(), c);
+        
+        return c;
     }
 }

@@ -121,27 +121,20 @@ public class PlayerMapper
         }
     }
 
-    private static Player createPlayer(ResultSet rs) throws MapperException
+    private static Player createPlayer(ResultSet rs) throws SQLException, MapperException
     {
-        try
-        {
-            long idn = rs.getLong("id");
-            int version = rs.getInt("version");
-            String firstName = rs.getString("firstName");
-            String lastName = rs.getString("lastName");
-            String email = rs.getString("email");
-            User user = UserMapper.find(idn);
-        
-            Player p = new Player(idn, version, firstName, lastName, email, user);
-        
-            identityMap.get().put(p.getId(), p);
-        
-            return p;
-        }
-        catch (SQLException e)
-        {
-            throw new MapperException(e);
-        }
+        long idn = rs.getLong("id");
+        int version = rs.getInt("version");
+        String firstName = rs.getString("firstName");
+        String lastName = rs.getString("lastName");
+        String email = rs.getString("email");
+        User user = UserMapper.find(idn);
+    
+        Player p = new Player(idn, version, firstName, lastName, email, user);
+    
+        identityMap.get().put(p.getId(), p);
+    
+        return p;
     }
 
 }
