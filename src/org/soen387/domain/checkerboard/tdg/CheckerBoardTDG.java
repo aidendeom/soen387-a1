@@ -73,4 +73,15 @@ public class CheckerBoardTDG {
 		return ps.executeQuery();
 	}
 	
+	public static final String FIND_FOR_PLAYER = "SELEC " + COLUMNS + " FROM " + TABLE_NAME
+	        + " WHERE first_player = ? OR second_player = ?;";
+	public static ResultSet findForPlayer(long id) throws SQLException
+	{
+	    Connection con = DbRegistry.getDbConnection();
+	    PreparedStatement ps = con.prepareStatement(FIND_FOR_PLAYER);
+	    ps.setLong(1, id);
+	    ps.setLong(2, id);
+	    return ps.executeQuery();
+	}
+	
 }

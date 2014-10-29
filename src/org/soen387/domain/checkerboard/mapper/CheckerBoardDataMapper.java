@@ -9,7 +9,8 @@ import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.checkerboard.tdg.CheckerBoardTDG;
 import org.soen387.domain.model.checkerboard.CheckerBoard;
 import org.soen387.domain.model.checkerboard.GameStatus;
-import org.soen387.domain.model.player.Player;
+import org.soen387.domain.model.player.IPlayer;
+import org.soen387.domain.model.player.PlayerProxy;
 
 public class CheckerBoardDataMapper {
 	
@@ -28,10 +29,10 @@ public class CheckerBoardDataMapper {
 		        l.add(new CheckerBoard(rs.getLong("id"),
 		        		rs.getInt("version"),
 		        		GameStatus.values()[rs.getInt("status")],
-		        		//pieces,
-		        		//new Player(rs.getLong("first_player")),
-		        		//new Player(rs.getLong("second_player")),
-		        		//new Player(rs.getLong("current_player"))
+		        		pieces,
+		        		new PlayerProxy(rs.getLong("first_player")),
+		        		new PlayerProxy(rs.getLong("second_player")),
+		        		new PlayerProxy(rs.getLong("current_player"))
 		        		));
 		    }
 		    return l;
@@ -42,6 +43,18 @@ public class CheckerBoardDataMapper {
             ResultSet rs = CheckerBoardTDG.findAll();
             return buildCollection(rs);
         } catch (SQLException e) {
+            throw new MapperException(e);
+        }
+	}
+	
+	public static List<CheckerBoard> findForPlayer(IPlayer p) throws MapperException
+	{
+	    try
+	    {
+    	    ResultSet rs = CheckerBoardTDG.findForPlayer(p.getId());
+    	    return buildCollection(rs);
+        }
+	    catch (SQLException e) {
             throw new MapperException(e);
         }
 	}
