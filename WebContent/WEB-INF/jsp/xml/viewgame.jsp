@@ -9,6 +9,6 @@
   <firstPlayer refid="${game.firstPlayer.id}" />
   <secondPlayer refid="${game.secondPlayer.id}" />
   <currentPlayer refid="${game.currentPlayer.id}" />
-  <pieces>"${game.stringPieces}"</pieces>
+  <pieces>${game.stringPieces}</pieces>
  </game>
 </checkers>
