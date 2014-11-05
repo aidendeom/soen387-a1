@@ -20,6 +20,7 @@ public class CheckerBoard {
 		this.firstPlayer = firstPlayer;
 		this.secondPlayer = secondPlayer;
 		this.currentPlayer = currentPlayer;
+		this.stringPieces = this.getStringPieces();
 	}
 	
 	public CheckerBoard(IPlayer firstPlayer, IPlayer secondPlayer) throws MapperException{
@@ -103,6 +104,7 @@ public class CheckerBoard {
 	IPlayer firstPlayer;
 	IPlayer secondPlayer;
 	IPlayer currentPlayer;
+	String stringPieces;
 
 
 	public void move(Point source, Point target) {

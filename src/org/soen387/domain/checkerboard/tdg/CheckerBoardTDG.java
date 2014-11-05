@@ -126,4 +126,14 @@ public class CheckerBoardTDG {
 
 	}
 	
+
+	public static final String FIND_BY_ID = "SELECT * FROM "+ TABLE_NAME +" WHERE id = ?;";
+	
+	public static ResultSet find(long id) throws SQLException {
+		Connection con = DbRegistry.getDbConnection();
+		PreparedStatement ps = con.prepareStatement(FIND_BY_ID);
+		ps.setLong(1, id);
+		return ps.executeQuery();
+	}
+	
 }

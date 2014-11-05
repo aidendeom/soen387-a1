@@ -12,6 +12,8 @@ import org.dsrg.soenea.domain.MapperException;
 import org.dsrg.soenea.service.threadLocal.DbRegistry;
 import org.soen387.domain.challenge.tdg.ChallengeTDG;
 import org.soen387.domain.checkerboard.tdg.CheckerBoardTDG;
+import org.soen387.domain.model.challenge.Challenge;
+import org.soen387.domain.model.challenge.ChallengeStatus;
 import org.soen387.domain.model.checkerboard.CheckerBoard;
 import org.soen387.domain.model.checkerboard.GameStatus;
 import org.soen387.domain.model.player.IPlayer;
@@ -121,7 +123,30 @@ public class CheckerBoardDataMapper {
 		}
 		
 	}
-
-
 	
+	public static CheckerBoard find(long id) throws MapperException
+    {
+        try
+        {
+            CheckerBoard c = identityMap.get().get(id);
+            
+            if (c == null)
+            {
+                ResultSet rs = CheckerBoardTDG.find(id);
+                
+                if (rs.next())
+                {
+                    c = createBoard(rs);
+                }
+                
+                rs.close();
+            }
+            
+            return c;
+        }
+        catch (SQLException e)
+        {
+            throw new MapperException(e);
+        }
+    }
 }

@@ -46,6 +46,8 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         		Challenge c = ChallengeMapper.find(challengeId);
         		//TODO: do we want to know if c actually exists? (check for null)?
         		if (accept){
+        			//TODO: do we need to make sure it's not the "challenger" that
+        			//is accepting the challenge? 
         			c.setStatus(ChallengeStatus.Accepted);
         			c.setVersion(c.getVersion()+1);
         			ChallengeMapper.update(c);
