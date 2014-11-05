@@ -65,8 +65,9 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         			
         		}
         		
-        		request.setAttribute("reason", "Challenge succesful!");
-        		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+        		request.setAttribute("challenge", c);
+        		//TODO: setup a JSP for succesful?
+        		request.getRequestDispatcher("/WEB-INF/jsp/xml/challengesuccesful.jsp").forward(request, response);
         	
         		
         	} else {
