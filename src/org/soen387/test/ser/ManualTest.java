@@ -5,8 +5,7 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
-import org.soen387.test.Setup;
-import org.soen387.test.Teardown;
+import org.soen387.app.Init;
 
 public class ManualTest {
 
@@ -29,7 +28,7 @@ public class ManualTest {
 		 * This is the URL for your application. Note that it should have no trailing slash
 		 * 
 		 */
-		FieldMap.current.get().put("BASE_URL", "http://localhost:8080/CheckersGame");
+		FieldMap.current.get().put("BASE_URL", "http://localhost:8080/soen387-a1");
 
 		/*
 		 * 
@@ -37,7 +36,7 @@ public class ManualTest {
 		 * defaults to what we've used in the tutorials, I think.
 		 * 
 		 */
-		FieldMap.current.get().put("XML_PARAM", "mode");
+//		FieldMap.current.get().put("XML_PARAM", "mode");
 		FieldMap.current.get().put("XML_VALUE", "xml");
 		
 		/*
@@ -51,12 +50,12 @@ public class ManualTest {
 		 */
 		
 		//UC 1
-		FieldMap.current.get().put("LOGIN_PATH", "/LogIn");
-		FieldMap.current.get().put("USERNAME_PARAM", "username");
-		FieldMap.current.get().put("PASSWORD_PARAM", "password");
+		FieldMap.current.get().put("LOGIN_PATH", "/Login");
+		FieldMap.current.get().put("USERNAME_PARAM", "user");
+		FieldMap.current.get().put("PASSWORD_PARAM", "pass");
 
 		//UC 2
-		FieldMap.current.get().put("LOGOUT_PATH", "/LogOut");
+		FieldMap.current.get().put("LOGOUT_PATH", "/Logout");
 		
 		
 		/*
@@ -66,21 +65,21 @@ public class ManualTest {
 		 * 
 		 */
 		//UC 3
-		FieldMap.current.get().put("REGISTER_PATH", "/RegisterPlayer");
-		FieldMap.current.get().put("FIRSTNAME_PARAM", "firstName");
-		FieldMap.current.get().put("LASTNAME_PARAM", "lastName");
+		FieldMap.current.get().put("REGISTER_PATH", "/Register");
+		FieldMap.current.get().put("FIRSTNAME_PARAM", "firstname");
+		FieldMap.current.get().put("LASTNAME_PARAM", "lastname");
 		FieldMap.current.get().put("EMAIL_PARAM", "email");
 		
 		//UC 4
 		FieldMap.current.get().put("LIST_PLAYERS_PATH", "/ListPlayers");
 		
 		//UC 5
-		FieldMap.current.get().put("VIEW_PLAYER_STATS_PATH", "/ViewPlayerStats");
+		FieldMap.current.get().put("VIEW_PLAYER_STATS_PATH", "/ViewUserStats");
 		FieldMap.current.get().put("PLAYER_PARAM", "id");
 		
 		//UC 6		
-		FieldMap.current.get().put("CHALLENGE_PLAYER_PATH", "/ChallengePlayer");
-		FieldMap.current.get().put("TARGET_PLAYER_PARAM", "player");		
+		FieldMap.current.get().put("CHALLENGE_PLAYER_PATH", "/ChallengeUser");
+		FieldMap.current.get().put("TARGET_PLAYER_PARAM", "id");	//or should it be: playerid	
 		
 		/*
 		 * By default I accept a status and either 1 or 2, the ordinal values of the ChallengeStatus.
@@ -90,11 +89,11 @@ public class ManualTest {
 		
 		//UC 7
 		FieldMap.current.get().put("RESPOND_TO_CHALLNGE_PATH", "/RespondToChallenge");
-		FieldMap.current.get().put("CHALLENGE_PARAM", "challenge");
+		FieldMap.current.get().put("CHALLENGE_PARAM", "id");
 		FieldMap.current.get().put("CHALLENGE_VERSION_PARAM", "version");
 		FieldMap.current.get().put("CHALLENGE_RESPONSE_PARAM", "status");
-		FieldMap.current.get().put("CHALLENGE_ACCEPT_VALUE", "1");
-		FieldMap.current.get().put("CHALLENGE_REFUSE_VALUE", "2");
+		FieldMap.current.get().put("CHALLENGE_ACCEPT_VALUE", "1"); //True
+		FieldMap.current.get().put("CHALLENGE_REFUSE_VALUE", "2"); //False
 		
 		//UC 8
 		FieldMap.current.get().put("LIST_GAMES_PATH", "/ListGames");
@@ -116,8 +115,7 @@ public class ManualTest {
 		 * 
 		 */
 		try {
-		Teardown.main(null);
-		Setup.main(null);
+		Init.main(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
