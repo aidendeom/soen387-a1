@@ -55,7 +55,8 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         		
         		if (accept){
         			c.setStatus(ChallengeStatus.Accepted);
-        			c.setVersion(c.getVersion()+1);
+        			c.setVersion(Integer.parseInt(request.getParameter("version")+1));
+        			//c.setVersion(c.getVersion()+1);
         			ChallengeMapper.update(c);
         			
         			Player thisPlayer = PlayerMapper.find(c.getChallenger().getId());
@@ -75,6 +76,8 @@ public class RespondToChallenge extends AbstractPageController implements Servle
 					}			
         		} else {
         			c.setStatus(ChallengeStatus.Refused);
+        			c.setVersion(Integer.parseInt(request.getParameter("version"))+1);
+        			ChallengeMapper.update(c);
         			
         		}
         		

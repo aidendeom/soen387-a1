@@ -5,7 +5,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkers>
 <status>success</status>
-<challenge status="${challenge.status}" id="${challenge.id}" version="${challenge.version}">
+<challenge status="${challenge.status.id}" id="${challenge.id}" version="${challenge.version}">
 <challenger refid="${challenge.challenger.id}" />
 <challengee refid="${challenge.challengee.id}" />
 </challenge>
