@@ -28,7 +28,6 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
      */
     public ChallengeUser() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -44,6 +43,11 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
                 
                 Player thisPlayer = PlayerMapper.find(id);
                 Player otherPlayer = PlayerMapper.find(id2);
+                
+                if(thisPlayer == null || otherPlayer == null){
+                	request.setAttribute("reason", "User doesn't exist");
+                	request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+                }
                 
                 if (!ChallengeMapper.challengeExists(thisPlayer, otherPlayer)
                         && !CheckerBoardDataMapper.gameExists(thisPlayer, otherPlayer))
