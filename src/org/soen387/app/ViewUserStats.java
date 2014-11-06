@@ -40,14 +40,20 @@ public class ViewUserStats extends AbstractPageController implements Servlet
     {
         try
         {
-            long id = Long.parseLong(request.getParameter("id"));
+        	String mode = request.getParameter("mode");
+        	long id = Long.parseLong(request.getParameter("id"));
             Player p = PlayerMapper.find(id);
             List<CheckerBoard> games = CheckerBoardDataMapper.findForPlayer(p);
             
             request.setAttribute("player", p);
             request.setAttribute("games", games);
             
-            request.getRequestDispatcher("/WEB-INF/jsp/xml/viewuserstats.jsp").forward(request, response);
+            if (mode != null && mode.equals("xml")){
+            	request.getRequestDispatcher("/WEB-INF/jsp/xml/viewuserstats.jsp").forward(request, response);
+            } else {
+                //this would be for html view, but we dont' have
+            	request.getRequestDispatcher("/WEB-INF/jsp/xml/viewuserstats.jsp").forward(request, response);
+            }
         }
         catch (MapperException e)
         {

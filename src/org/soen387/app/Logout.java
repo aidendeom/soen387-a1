@@ -23,8 +23,10 @@ public class Logout extends AbstractPageController implements Servlet {
     @Override
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
         
+    	HttpSession session = request.getSession();
+    	String mode = request.getParameter("mode");
+    	
         System.out.println(session.isNew());
         
         Object userID = session.getAttribute("userid");
@@ -43,6 +45,12 @@ public class Logout extends AbstractPageController implements Servlet {
         {
             request.setAttribute("status", "failed");
         }
-        request.getRequestDispatcher("/WEB-INF/jsp/xml/logout.jsp").forward(request, response);
+        
+        if (mode != null && mode.equals("xml")){
+        	request.getRequestDispatcher("/WEB-INF/jsp/xml/logout.jsp").forward(request, response);
+        } else {
+            //this would be for html view, but we dont' have
+        	request.getRequestDispatcher("/WEB-INF/jsp/xml/logout.jsp").forward(request, response);
+        }
     }
 }

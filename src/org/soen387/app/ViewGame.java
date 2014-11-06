@@ -40,12 +40,18 @@ public class ViewGame extends AbstractPageController implements Servlet
     {
         try
         {
-            long id = Long.parseLong(request.getParameter("id"));
+        	String mode = request.getParameter("mode");
+        	long id = Long.parseLong(request.getParameter("id"));
             CheckerBoard g = CheckerBoardDataMapper.find(id);
            
             request.setAttribute("game", g);
             
-            request.getRequestDispatcher("/WEB-INF/jsp/xml/viewgame.jsp").forward(request, response);
+            if (mode != null && mode.equals("xml")){
+            	request.getRequestDispatcher("/WEB-INF/jsp/xml/viewgame.jsp").forward(request, response);
+            } else {
+                //this would be for html view, but we dont' have
+            	request.getRequestDispatcher("/WEB-INF/jsp/xml/viewgame.jsp").forward(request, response);
+            }
         }
         catch (MapperException e)
         {

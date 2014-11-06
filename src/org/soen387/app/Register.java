@@ -35,6 +35,8 @@ public class Register extends AbstractPageController implements Servlet
                                                                        IOException
     {
         HttpSession session = request.getSession();
+        String mode = request.getParameter("mode");
+        
         if (!Utils.isLoggedIn(session))
         {
             try
@@ -73,24 +75,26 @@ public class Register extends AbstractPageController implements Servlet
                             //response.sendRedirect(String.format("/soen387-a1/Login?user=%s&pass=%s", user.getUsername(), user.getPassword()));
                             request.setAttribute("user", user);
                             request.setAttribute("player", player);
-                            request.getRequestDispatcher("/WEB-INF/jsp/xml/register.jsp").forward(request,  response);
+                            if (mode != null && mode.equals("xml")){
+                            	request.getRequestDispatcher("/WEB-INF/jsp/xml/register.jsp").forward(request,  response);
+                            } else {
+                                //this would be for html view, but we dont' have
+                            	request.getRequestDispatcher("/WEB-INF/jsp/xml/register.jsp").forward(request,  response);
+                            }
                         }
                         else
                         {
-                            request.setAttribute("reason", "Email already exists");
-                            request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request,  response);
+                        	loginFailed(request, response, "Email already exists");
                         }
                     }
                     else
                     {
-                        request.setAttribute("reason", "Username already exists");
-                        request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request,  response);
+                    	loginFailed(request, response, "Username already exists");
                     }
                 }
                 else
                 {
-                    request.setAttribute("reason", "Incorrect number of parameters");
-                    request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request,  response);
+                	loginFailed(request, response, "Incorrect number of parameters");
                 }
             }
             catch (MapperException e)
@@ -103,5 +107,18 @@ public class Register extends AbstractPageController implements Servlet
             request.setAttribute("reason", "Already logged in");
             request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request,  response);
         }
+    }
+    
+    private static void loginFailed(HttpServletRequest request,
+    		HttpServletResponse response,
+    		String reason) throws ServletException,
+    		IOException
+    {
+    	request.setAttribute("reason", reason);
+    	if(request.getParameter("mode") != null && request.getParameter("mode").equals("xml")){
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+    	} else {
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+    	}
     }
 }

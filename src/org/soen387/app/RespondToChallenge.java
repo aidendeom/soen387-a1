@@ -83,7 +83,7 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         		}
         		
         		request.setAttribute("challenge", c);
-        		 if (mode.equals("xml")){
+        		 if (mode != null && mode.equals("xml")){
         			 request.getRequestDispatcher("/WEB-INF/jsp/xml/challengesuccesful.jsp").forward(request, response);
         		 } else { //we don't have an alternative yet
         			 request.getRequestDispatcher("/WEB-INF/jsp/xml/challengesuccesful.jsp").forward(request, response);
@@ -108,7 +108,7 @@ public class RespondToChallenge extends AbstractPageController implements Servle
                           IOException
     {
     	request.setAttribute("reason", reason);
-    	if(request.getParameter("mode").equals("xml")){
+    	if(request.getParameter("mode") != null && request.getParameter("mode").equals("xml")){
     		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
         	.forward(request, response);
     	} else {

@@ -34,9 +34,15 @@ public class ListGames extends AbstractPageController implements Servlet {
 	{
 		try
 		{
+			String mode = request.getParameter("mode");
 			List<CheckerBoard> games = CheckerBoardDataMapper.findAll();
 			request.setAttribute("games", games);
-			request.getRequestDispatcher("/WEB-INF/jsp/xml/listgames.jsp").forward(request, response);
+			if (mode != null && mode.equals("xml")){
+				request.getRequestDispatcher("/WEB-INF/jsp/xml/listgames.jsp").forward(request, response);
+            } else {
+                //this would be for html view, but we dont' have
+            	request.getRequestDispatcher("/WEB-INF/jsp/xml/listgames.jsp").forward(request, response);
+            }
 		}
 		catch (MapperException e)
 		{
