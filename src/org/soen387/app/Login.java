@@ -37,8 +37,8 @@ public class Login extends AbstractPageController implements Servlet
         HttpSession session = request.getSession();
         String mode = request.getParameter("mode");
         
-        if (!Utils.isLoggedIn(session))
-        {
+        //if (!Utils.isLoggedIn(session))
+        //{
             try
             {
                 String username = request.getParameter("user");
@@ -82,11 +82,11 @@ public class Login extends AbstractPageController implements Servlet
             {
                 e.printStackTrace();
             }
-        }
-        else
-        {
-            loginFailed(request, response, "Already logged in");
-        }
+        //}
+        //else
+        //{
+        //   loginFailed(request, response, "Already logged in");
+        //}
     }
 
     private static void loginFailed(HttpServletRequest request,
@@ -95,7 +95,7 @@ public class Login extends AbstractPageController implements Servlet
                                                   IOException
     {
     	request.setAttribute("reason", reason);
-    	if(request.getParameter("mode").equals("xml")){
+    	if(request.getParameter("mode") != null && request.getParameter("mode").equals("xml")){
     		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
             	.forward(request, response);
     	} else {

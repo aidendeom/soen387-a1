@@ -91,7 +91,7 @@ public class ManualTest {
 		FieldMap.current.get().put("RESPOND_TO_CHALLNGE_PATH", "/RespondToChallenge");
 		FieldMap.current.get().put("CHALLENGE_PARAM", "id");
 		FieldMap.current.get().put("CHALLENGE_VERSION_PARAM", "version");
-		FieldMap.current.get().put("CHALLENGE_RESPONSE_PARAM", "status");
+		FieldMap.current.get().put("CHALLENGE_RESPONSE_PARAM", "accept");
 		FieldMap.current.get().put("CHALLENGE_ACCEPT_VALUE", "true"); //True
 		FieldMap.current.get().put("CHALLENGE_REFUSE_VALUE", "false"); //False
 		

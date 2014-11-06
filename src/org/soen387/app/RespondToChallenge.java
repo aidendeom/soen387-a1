@@ -79,8 +79,7 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         		} else {
         			c.setStatus(ChallengeStatus.Refused);
         			c.setVersion(Integer.parseInt(request.getParameter("version"))+1);
-        			ChallengeMapper.update(c);
-        			
+        			ChallengeMapper.update(c);        			
         		}
         		
         		request.setAttribute("challenge", c);
