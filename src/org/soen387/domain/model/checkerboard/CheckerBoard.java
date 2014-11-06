@@ -1,7 +1,7 @@
 package org.soen387.domain.model.checkerboard;
 
 import java.awt.Point;
-import java.sql.SQLException;
+import java.nio.charset.Charset;
 
 import org.dsrg.soenea.domain.MapperException;
 import org.soen387.domain.checkerboard.mapper.CheckerBoardDataMapper;
@@ -20,7 +20,6 @@ public class CheckerBoard {
 		this.firstPlayer = firstPlayer;
 		this.secondPlayer = secondPlayer;
 		this.currentPlayer = currentPlayer;
-		//this.stringPieces = this.getStringPieces();
 	}
 	
 	public CheckerBoard(IPlayer firstPlayer, IPlayer secondPlayer) throws MapperException{
@@ -28,20 +27,32 @@ public class CheckerBoard {
 	}
 	
 	private static char[][] createDefaultPieces(){
+		
+		//b _ b _ r _ _ b
+		//when row is even, its' p_p_p_p_
+		//when row is odd, it's _p_p_p_p
+		//when row is less then < 3, its all white
+		//when row is greater than >4 its all black
 		char[][] pieces = new char[8][8];
-        for(int i=0; i < 8; i++)
-        {
-            for(int j=0; j < 8; j+=2)
-            {
-            	if(i < 3) {
-            		pieces[j][i] = 'r';
-                } else if(i > 4) {
-                    pieces[j][i] = 'b';
-                } else {
-                	pieces[j][i] = ' ';
-                }
-            }
-        }
+		for (int i=0; i < 8; i++) //row
+			   for (int j=0; j < 8; j++)//column
+				   if (i < 3){ //initialize the black pieces
+					   if(i % 2 == 0 && j%2 ==0 ){ //even row & column
+						   pieces[i][j] = 'b';
+					   } else if(i%2!=0 && j%2!=0){//odd row, odd column
+						   pieces[i][j] = 'b';
+					   } else { //e-r, o-c and o-r, e-c 
+						   pieces[i][j] = ' ';
+					   }
+				   } else if (i > 4){ //initialize the red pieces
+					   if(i%2==0 && j%2==0) { //even row and column
+						   pieces[i][j] = 'r';
+					   } else if (i%2!=0 && j%2!=0){ //odd row, odd column
+						   pieces[i][j] = 'r';
+					   } else { //e-r,o-c and o-r, e-c
+						   pieces[i][j] = ' ';
+					   }
+				   }
         return pieces;
 	}
 
@@ -104,8 +115,6 @@ public class CheckerBoard {
 	IPlayer firstPlayer;
 	IPlayer secondPlayer;
 	IPlayer currentPlayer;
-	//String stringPieces;
-
 
 	public void move(Point source, Point target) {
 		
@@ -119,11 +128,14 @@ public class CheckerBoard {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < pieces.length; i++) {
 			for (int j = 0; j < pieces[i].length; j++) {
-				sb.append(pieces[j][i]);
+				if(pieces[i][j] == 0X0 || pieces[i][j] == ' '){
+					sb.append(" ");
+				} else {
+					sb.append(pieces[i][j]);
+				}
 			}
 		}
-		
-		System.out.println(sb);
+		System.out.println(sb.toString());
 		return sb.toString();
 	}
 }

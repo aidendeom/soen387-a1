@@ -48,6 +48,7 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         		if (accept){
         			//TODO: do we need to make sure it's not the "challenger" that
         			//is accepting the challenge? 
+        			//TODO: if the challenge is already accepted, don't accept it again!
         			c.setStatus(ChallengeStatus.Accepted);
         			c.setVersion(c.getVersion()+1);
         			ChallengeMapper.update(c);

@@ -48,12 +48,13 @@ public class CheckerBoardDataMapper {
 	private static CheckerBoard createBoard(ResultSet rs) throws SQLException
 	{
             String piecesString = rs.getString("pieces");
+            System.out.println("From DM: " + piecesString);
             char[][] pieces = new char[8][8];
             for(int i=0; i < 8; i++)
             {
                 for(int j=0; j < 8; j++)
                 {
-                    pieces[j][i] = piecesString.charAt(i*8+j);
+                    pieces[i][j] = piecesString.charAt(i*8+j);
                 }
             }
             
