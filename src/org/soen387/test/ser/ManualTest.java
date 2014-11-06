@@ -36,7 +36,7 @@ public class ManualTest {
 		 * defaults to what we've used in the tutorials, I think.
 		 * 
 		 */
-//		FieldMap.current.get().put("XML_PARAM", "mode");
+		FieldMap.current.get().put("XML_PARAM", "mode");
 		FieldMap.current.get().put("XML_VALUE", "xml");
 		
 		/*

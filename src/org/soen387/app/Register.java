@@ -40,7 +40,6 @@ public class Register extends AbstractPageController implements Servlet
             try
             {
                 long uid = UserMapper.getNextId();
-                
                 String username = request.getParameter("user");
                 String password = request.getParameter("pass");
                 String firstName = request.getParameter("firstname");
