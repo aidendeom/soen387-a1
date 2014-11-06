@@ -39,6 +39,8 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         try
         {
         	HttpSession session = request.getSession();
+        	String mode = request.getParameter("mode");
+        	
         	if (Utils.isLoggedIn(session)){
         		long challengeId = Long.parseLong(request.getParameter("id"));
         		boolean accept = Boolean.parseBoolean(request.getParameter("accept"));
@@ -82,7 +84,12 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         		}
         		
         		request.setAttribute("challenge", c);
-        		request.getRequestDispatcher("/WEB-INF/jsp/xml/challengesuccesful.jsp").forward(request, response);
+        		 if (mode.equals("xml")){
+        			 request.getRequestDispatcher("/WEB-INF/jsp/xml/challengesuccesful.jsp").forward(request, response);
+        		 } else { //we don't have an alternative yet
+        			 request.getRequestDispatcher("/WEB-INF/jsp/xml/challengesuccesful.jsp").forward(request, response);
+        		 }
+        		
         	
         		
         	} else {
@@ -102,8 +109,14 @@ public class RespondToChallenge extends AbstractPageController implements Servle
                           IOException
     {
     	request.setAttribute("reason", reason);
-    	request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
-    	.forward(request, response);
+    	if(request.getParameter("mode").equals("xml")){
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
+        	.forward(request, response);
+    	} else {
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
+        	.forward(request, response);
+    	}
+    	
     }
 
 }
