@@ -109,10 +109,10 @@ public class RespondToChallenge extends AbstractPageController implements Servle
     {
     	request.setAttribute("reason", reason);
     	if(request.getParameter("mode") != null && request.getParameter("mode").equals("xml")){
-    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/failure.jsp")
         	.forward(request, response);
     	} else {
-    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/failure.jsp")
         	.forward(request, response);
     	}
     	

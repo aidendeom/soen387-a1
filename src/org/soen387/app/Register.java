@@ -84,17 +84,17 @@ public class Register extends AbstractPageController implements Servlet
                         }
                         else
                         {
-                        	loginFailed(request, response, "Email already exists");
+                        	registerFailed(request, response, "Email already exists");
                         }
                     }
                     else
                     {
-                    	loginFailed(request, response, "Username already exists");
+                    	registerFailed(request, response, "Username already exists");
                     }
                 }
                 else
                 {
-                	loginFailed(request, response, "Incorrect number of parameters");
+                	registerFailed(request, response, "Incorrect number of parameters");
                 }
             }
             catch (MapperException e)
@@ -109,16 +109,16 @@ public class Register extends AbstractPageController implements Servlet
         }
     }
     
-    private static void loginFailed(HttpServletRequest request,
+    private static void registerFailed(HttpServletRequest request,
     		HttpServletResponse response,
     		String reason) throws ServletException,
     		IOException
     {
     	request.setAttribute("reason", reason);
     	if(request.getParameter("mode") != null && request.getParameter("mode").equals("xml")){
-    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/failure.jsp").forward(request, response);
     	} else {
-    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/failure.jsp").forward(request, response);
     	}
     }
 }

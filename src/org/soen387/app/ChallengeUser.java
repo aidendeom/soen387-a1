@@ -47,7 +47,7 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
                 Player otherPlayer = PlayerMapper.find(id2);
                 
                 if(thisPlayer == null || otherPlayer == null){
-                	loginFailed(request, response, "User doesn't exist");
+                	challengeFailed(request, response, "User doesn't exist");
                 }
                 
                 if (!ChallengeMapper.challengeExists(thisPlayer, otherPlayer)
@@ -63,10 +63,10 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
                     	request.getRequestDispatcher("/WEB-INF/jsp/xml/challengeuser.jsp").forward(request, response);
                     }
                 } else {
-                	loginFailed(request, response, "Open Challenge or Game exists");
+                	challengeFailed(request, response, "Open Challenge or Game exists");
                 }
             } else {
-            	loginFailed(request, response, "User not logged in!");
+            	challengeFailed(request, response, "User not logged in!");
             }
         } catch (MapperException e) {
 
@@ -75,14 +75,14 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
         
     }
 
-    private static void loginFailed(HttpServletRequest request,
+    private static void challengeFailed(HttpServletRequest request,
     		HttpServletResponse response,String reason) throws ServletException,IOException
     {
     	request.setAttribute("reason", reason);
     	if(request.getParameter("mode") != null && request.getParameter("mode").equals("xml")){
-    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/failure.jsp").forward(request, response);
     	} else {
-    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/failure.jsp").forward(request, response);
     	}
     }
 
