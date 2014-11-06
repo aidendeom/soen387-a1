@@ -36,6 +36,8 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
         try
         {
             HttpSession session = request.getSession();
+            String mode = request.getParameter("mode");
+            
             if (Utils.isLoggedIn(session))
             {
                 long id = (long) session.getAttribute("playerid");
@@ -45,8 +47,7 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
                 Player otherPlayer = PlayerMapper.find(id2);
                 
                 if(thisPlayer == null || otherPlayer == null){
-                	request.setAttribute("reason", "User doesn't exist");
-                	request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+                	loginFailed(request, response, "User doesn't exist");
                 }
                 
                 if (!ChallengeMapper.challengeExists(thisPlayer, otherPlayer)
@@ -55,14 +56,17 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
                     Challenge c = new Challenge(thisPlayer, otherPlayer);
                     ChallengeMapper.insert(c);
                     request.setAttribute("challenge", c);
-                    request.getRequestDispatcher("/WEB-INF/jsp/xml/challengeuser.jsp").forward(request, response);
+                    if (mode.equals("xml")){
+                    	request.getRequestDispatcher("/WEB-INF/jsp/xml/challengeuser.jsp").forward(request, response);
+                    } else {
+                    	//this would be for html view, but we dont' have
+                    	request.getRequestDispatcher("/WEB-INF/jsp/xml/challengeuser.jsp").forward(request, response);
+                    }
                 } else {
-                	request.setAttribute("reason", "Open Challenge or Game exists");
-                	request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+                	loginFailed(request, response, "Open Challenge or Game exists");
                 }
             } else {
-            	request.setAttribute("reason", "User not logged in!");
-            	request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+            	loginFailed(request, response, "User not logged in!");
             }
         } catch (MapperException e) {
 
@@ -71,5 +75,15 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
         
     }
 
+    private static void loginFailed(HttpServletRequest request,
+    		HttpServletResponse response,String reason) throws ServletException,IOException
+    {
+    	request.setAttribute("reason", reason);
+    	if(request.getParameter("mode").equals("xml")){
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+    	} else {
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+    	}
+    }
 
 }
