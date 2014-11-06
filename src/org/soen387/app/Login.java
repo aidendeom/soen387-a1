@@ -88,12 +88,18 @@ public class Login extends AbstractPageController implements Servlet
 
     private static void loginFailed(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    String reason) throws ServletException,
+                                    String reason, String mode) throws ServletException,
                                                   IOException
     {
-        request.setAttribute("reason", reason);
-        request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
-                .forward(request, response);
+    	request.setAttribute("reason", reason);
+    	if(mode.equals("xml")){
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
+            	.forward(request, response);
+    	} else {
+    		//pass as we don't have any other views
+    	}
+        
+        
     }
 
 
