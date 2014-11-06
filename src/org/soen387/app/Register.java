@@ -68,9 +68,12 @@ public class Register extends AbstractPageController implements Servlet
                             PlayerMapper.insert(player);
                             
                             
-                            request.setAttribute("user", user.getUsername());
-                            request.setAttribute("pass", user.getPassword());
-                            response.sendRedirect(String.format("/soen387-a1/Login?user=%s&pass=%s", user.getUsername(), user.getPassword()));
+                            //request.setAttribute("user", user.getUsername());
+                            //request.setAttribute("pass", user.getPassword());
+                            //response.sendRedirect(String.format("/soen387-a1/Login?user=%s&pass=%s", user.getUsername(), user.getPassword()));
+                            request.setAttribute("user", user);
+                            request.setAttribute("player", player);
+                            request.getRequestDispatcher("/WEB-INF/jsp/xml/register.jsp").forward(request,  response);
                         }
                         else
                         {
