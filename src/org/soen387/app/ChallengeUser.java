@@ -56,7 +56,7 @@ public class ChallengeUser extends AbstractPageController implements Servlet {
                     Challenge c = new Challenge(thisPlayer, otherPlayer);
                     ChallengeMapper.insert(c);
                     request.setAttribute("challenge", c);
-                    if (mode.equals("xml")){
+                    if (mode != null && mode.equals("xml")){
                     	request.getRequestDispatcher("/WEB-INF/jsp/xml/challengeuser.jsp").forward(request, response);
                     } else {
                     	//this would be for html view, but we dont' have
