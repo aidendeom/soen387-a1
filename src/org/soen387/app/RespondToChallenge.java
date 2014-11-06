@@ -71,7 +71,7 @@ public class RespondToChallenge extends AbstractPageController implements Servle
                     
                     CheckerBoard game = null;
         			try {
-						game = new CheckerBoard(thisPlayer, otherPlayer);
+						game = new CheckerBoard(otherPlayer, thisPlayer);
 						CheckerBoardDataMapper.insert(game);
 					} catch (MapperException e) {
 						e.printStackTrace();
