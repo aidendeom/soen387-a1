@@ -31,7 +31,6 @@ public class RespondToChallenge extends AbstractPageController implements Servle
      */
     public RespondToChallenge() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -44,17 +43,28 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         		long challengeId = Long.parseLong(request.getParameter("id"));
         		boolean accept = Boolean.parseBoolean(request.getParameter("accept"));
         		Challenge c = ChallengeMapper.find(challengeId);
-        		//TODO: do we want to know if c actually exists? (check for null)?
+        		
+        		if (c == null){
+        			responseFailed(request, response, "This challenge does not exist");
+        		}
+        		
+        		//is the challenge already accepted?
+        		if (c.getStatus()==ChallengeStatus.Accepted){
+        			responseFailed(request, response, "This challenge has already been accepted");
+        		}
+        		
         		if (accept){
-        			//TODO: do we need to make sure it's not the "challenger" that
-        			//is accepting the challenge? 
-        			//TODO: if the challenge is already accepted, don't accept it again!
         			c.setStatus(ChallengeStatus.Accepted);
         			c.setVersion(c.getVersion()+1);
         			ChallengeMapper.update(c);
         			
         			Player thisPlayer = PlayerMapper.find(c.getChallenger().getId());
                     Player otherPlayer = PlayerMapper.find(c.getChallengee().getId());
+                    
+                    //only challengee should accept the challenge
+                    if ((Long)session.getAttribute("playerid") == thisPlayer.getId()){
+                    	responseFailed(request, response, "You can't accept your own issued challenge");
+                    }
                     
                     CheckerBoard game = null;
         			try {
@@ -69,13 +79,11 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         		}
         		
         		request.setAttribute("challenge", c);
-        		//TODO: setup a JSP for succesful?
         		request.getRequestDispatcher("/WEB-INF/jsp/xml/challengesuccesful.jsp").forward(request, response);
         	
         		
         	} else {
-        		request.setAttribute("reason", "User not logged in!");
-            	request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp").forward(request, response);
+        		responseFailed(request, response, "User not logged in!");
         	}
         	
         } catch (MapperException e) {
@@ -84,6 +92,15 @@ public class RespondToChallenge extends AbstractPageController implements Servle
         }
         
     }
-
+    
+    private static void responseFailed(HttpServletRequest request,
+            HttpServletResponse response,
+            String reason) throws ServletException,
+                          IOException
+    {
+    	request.setAttribute("reason", reason);
+    	request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
+    	.forward(request, response);
+    }
 
 }
