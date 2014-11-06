@@ -42,6 +42,7 @@ public class Login extends AbstractPageController implements Servlet
             {
                 String username = request.getParameter("user");
                 String password = request.getParameter("pass");
+                String mode = request.getParameter("mode");
     
                 User user = UserMapper.findByUsername(username);
                 if (user != null && password.equals(user.getPassword()))
@@ -55,9 +56,14 @@ public class Login extends AbstractPageController implements Servlet
     
                     session.setAttribute("userid", user.getId());
                     session.setAttribute("playerid", player.getId());
-    
-                    request.getRequestDispatcher("/WEB-INF/jsp/xml/login.jsp")
-                            .forward(request, response);
+                    
+                    if (mode.equals("xml")){
+                    	request.getRequestDispatcher("/WEB-INF/jsp/xml/login.jsp")
+                        .forward(request, response);
+                    } else {
+                    	//this would be for html view, but we dont' have
+                    }
+                    
                 }
                 else if (user == null)
                 {
