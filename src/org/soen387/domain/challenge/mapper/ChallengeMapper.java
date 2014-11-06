@@ -129,7 +129,7 @@ public class ChallengeMapper
         IPlayer challenger = new PlayerProxy(challengerID);
         IPlayer challengee = new PlayerProxy(challengeeID);
         
-        Challenge c = new Challenge(id, 1, challenger, challengee, ChallengeStatus.values()[rs.getInt("status")]);
+        Challenge c = new Challenge(id, rs.getInt("version"), challenger, challengee, ChallengeStatus.values()[rs.getInt("status")]);
         
         identityMap.get().put(c.getId(), c);
         

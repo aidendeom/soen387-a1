@@ -138,7 +138,9 @@ public class ChallengeTDG {
         ps.setLong(6,  id);
         ps.setInt(7, version-1);
         
+        System.out.println(ps.toString());
         int result = ps.executeUpdate();
+        System.out.println(result);
         ps.close();
         return result;
 	}
