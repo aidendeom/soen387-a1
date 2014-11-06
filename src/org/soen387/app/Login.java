@@ -35,6 +35,7 @@ public class Login extends AbstractPageController implements Servlet
                                                         IOException
     {
         HttpSession session = request.getSession();
+        String mode = request.getParameter("mode");
         
         if (!Utils.isLoggedIn(session))
         {
@@ -42,7 +43,6 @@ public class Login extends AbstractPageController implements Servlet
             {
                 String username = request.getParameter("user");
                 String password = request.getParameter("pass");
-                String mode = request.getParameter("mode");
     
                 User user = UserMapper.findByUsername(username);
                 if (user != null && password.equals(user.getPassword()))
@@ -62,6 +62,9 @@ public class Login extends AbstractPageController implements Servlet
                         .forward(request, response);
                     } else {
                     	//this would be for html view, but we dont' have
+                    	request.getRequestDispatcher("/WEB-INF/jsp/xml/login.jsp")
+                        .forward(request, response);
+
                     }
                     
                 }
@@ -88,15 +91,16 @@ public class Login extends AbstractPageController implements Servlet
 
     private static void loginFailed(HttpServletRequest request,
                                     HttpServletResponse response,
-                                    String reason, String mode) throws ServletException,
+                                    String reason) throws ServletException,
                                                   IOException
     {
     	request.setAttribute("reason", reason);
-    	if(mode.equals("xml")){
+    	if(request.getParameter("mode").equals("xml")){
     		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
             	.forward(request, response);
     	} else {
-    		//pass as we don't have any other views
+    		request.getRequestDispatcher("/WEB-INF/jsp/xml/loginfailed.jsp")
+        	.forward(request, response);
     	}
         
         
