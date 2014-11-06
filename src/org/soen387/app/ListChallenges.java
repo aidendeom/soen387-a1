@@ -29,9 +29,15 @@ public class ListChallenges extends AbstractPageController implements Servlet {
     protected void processRequest(HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
         try {
+        	String mode = request.getParameter("mode");
             List<Challenge> challenges = ChallengeMapper.findAll();
             request.setAttribute("challenges", challenges);
-            request.getRequestDispatcher("/WEB-INF/jsp/xml/listchallenges.jsp").forward(request, response);
+            if (mode != null && mode.equals("xml")){
+            	request.getRequestDispatcher("/WEB-INF/jsp/xml/listchallenges.jsp").forward(request, response);
+            } else {
+                //this would be for html view, but we dont' have
+            	request.getRequestDispatcher("/WEB-INF/jsp/xml/listchallenges.jsp").forward(request, response);
+            }
         } catch (MapperException e) {
 
             e.printStackTrace();

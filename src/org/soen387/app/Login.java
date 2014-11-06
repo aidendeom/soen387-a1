@@ -57,14 +57,13 @@ public class Login extends AbstractPageController implements Servlet
                     session.setAttribute("userid", user.getId());
                     session.setAttribute("playerid", player.getId());
                     
-                    if (mode.equals("xml")){
+                    if (mode != null && mode.equals("xml")){
                     	request.getRequestDispatcher("/WEB-INF/jsp/xml/login.jsp")
                         .forward(request, response);
                     } else {
                     	//this would be for html view, but we dont' have
                     	request.getRequestDispatcher("/WEB-INF/jsp/xml/login.jsp")
                         .forward(request, response);
-
                     }
                     
                 }
