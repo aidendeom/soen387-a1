@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.dsrg.soenea.domain.MapperException;
+import org.dsrg.soenea.service.threadLocal.ThreadLocalTracker;
 import org.soen387.domain.challenge.tdg.ChallengeTDG;
 import org.soen387.domain.model.challenge.Challenge;
 import org.soen387.domain.model.challenge.ChallengeStatus;
@@ -23,6 +24,10 @@ public class ChallengeMapper
             return new HashMap<Long, Challenge>();
         }
     };
+    
+    static {
+    	ThreadLocalTracker.registerThreadLocal(identityMap);
+    }
     
     public static Challenge find(long id) throws MapperException
     {

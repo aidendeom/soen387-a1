@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 import org.dsrg.soenea.domain.MapperException;
+import org.dsrg.soenea.service.threadLocal.ThreadLocalTracker;
 import org.soen387.domain.model.user.User;
 import org.soen387.domain.user.tdg.UserTDG;
 
@@ -18,6 +19,11 @@ public class UserMapper {
             return new HashMap<Long, User>();
         }
     };
+    
+  //auto purge the identityMap
+    static {
+    	ThreadLocalTracker.registerThreadLocal(identityMap);
+    }
     
 	public static User find(long id) throws MapperException
 	{

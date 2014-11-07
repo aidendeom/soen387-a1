@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.dsrg.soenea.domain.MapperException;
 import org.dsrg.soenea.service.threadLocal.DbRegistry;
+import org.dsrg.soenea.service.threadLocal.ThreadLocalTracker;
 import org.soen387.domain.challenge.tdg.ChallengeTDG;
 import org.soen387.domain.checkerboard.tdg.CheckerBoardTDG;
 import org.soen387.domain.model.challenge.Challenge;
@@ -30,6 +31,10 @@ public class CheckerBoardDataMapper {
             return new HashMap<Long, CheckerBoard>();
         }
     };
+    
+    static {
+    	ThreadLocalTracker.registerThreadLocal(identityMap);
+    }
     
 	public static List<CheckerBoard> buildCollection(ResultSet rs)
 		    throws SQLException {

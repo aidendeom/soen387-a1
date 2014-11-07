@@ -56,5 +56,10 @@ public abstract class AbstractPageController extends Servlet {
 		}
 		DbRegistry.setTablePrefix(tablePrefix);
 	}
+	
+	@Override
+	public void destroy(){
+		System.out.println("I have been destroyed bitches!");
+	}
 
 }
